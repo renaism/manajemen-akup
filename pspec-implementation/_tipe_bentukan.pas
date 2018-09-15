@@ -9,16 +9,16 @@ type
         satuan: string;
     end;
 
+    BahanMenu = record
+        bahan: Bahan;
+        jumlah: real;
+    end;
+
     Menu = record
         id_menu: string;
         nama_menu: string;
         harga_menu: real;
-    end;
-
-    BahanMenu = record
-        menu: Menu;
-        bahan: Bahan;
-        jumlah: real;
+        daftar_bahan: array of BahanMenu;
     end;
 
     Pesan = record
