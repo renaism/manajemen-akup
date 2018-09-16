@@ -16,4 +16,4 @@ Implementasi *program specification* (P-Spec) dalam bahasa Pascal dapat dilihat 
 ## Database Aplikasi
 Sintaks SQL yang digunakan untuk membangun *table-table* yang akan digunakan di *database* aplikasi ini dapat dilihat di folder [database](https://github.com/renaism/manajemen-akup/tree/master/database).
 
-*Salam profit dari ketua kami, [Bayu Arifat](https://www.youtube.com/channel/UC71TKqN-dRYpudR2Iv4tuCA/featured).*
+*Salam profit dari ketua kami, [Bayu Arifat](https://raw.githubusercontent.com/renaism/manajemen-akup/master/mockups/b_sunflower.png).*
