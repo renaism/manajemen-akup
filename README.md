@@ -13,4 +13,7 @@ Implementasi *program specification* (P-Spec) dalam bahasa Pascal dapat dilihat 
 ## Mockup Aplikasi
 *Mockup* dari aplikasi ini dapat dilihat di folder [mockups](https://github.com/renaism/manajemen-akup/tree/master/mockups).
 
+## Database Aplikasi
+Sintaks SQL yang digunakan untuk membangun *table-table* yang akan digunakan di *database* aplikasi ini dapat dilihat di folder [database](https://github.com/renaism/manajemen-akup/tree/master/database).
+
 *Salam profit dari ketua kami, [Bayu Arifat](https://www.youtube.com/channel/UC71TKqN-dRYpudR2Iv4tuCA/featured).*
