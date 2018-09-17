@@ -80,7 +80,7 @@ begin
     i := 0;
     while (i < length(d_bahan)) and (b.id_bahan <> d_bahan[i].id_bahan) do
         i := i + 1;
-    if b.id_bahan <> d_bahan[i].id_bahan then
+    if b.id_bahan = d_bahan[i].id_bahan then
         cari_bahan := i
     else
         cari_bahan := -1;
