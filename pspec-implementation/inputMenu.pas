@@ -13,15 +13,18 @@ type
         	nama_menu: string;
         	harga_menu: real;
     	end;
+var
+        daftar_menu : array[0..100] of menu;
+	i : integer;
 
 begin
 	//Input
 	write('Id Menu : ');
-	readln(menu.id_menu);
+	readlen(daftar_menu[i].id_menu);
 	write('Nama Menu  : ');
-	readln(menu.nama_menu);
+	readln(daftar_menu[i].nama_menu);
 	write('Harga Menu: ');
-	readln(menu.harga_menu);
+	readln(daftar_menu[i].harga_menu);
 	write('Input data menu berhasil di inputkan ! (Tekan ENTER)');
 	readln;
 end;
