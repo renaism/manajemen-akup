@@ -15,6 +15,7 @@ type
     	end;
 var
         daftar_menu : array[0..100] of menu;
+	daftar_bahan : array[0..100] of bahan;
 	i : integer;
 
 begin
@@ -25,7 +26,10 @@ begin
 	readln(daftar_menu[i].nama_menu);
 	write('Harga Menu: ');
 	readln(daftar_menu[i].harga_menu);
+	write('masukan bahan: ');
+	readln(
 	write('Input data menu berhasil di inputkan ! (Tekan ENTER)');
+	readln(daftar_bahan[i].nama_bahan);
 	readln;
 end;
 	
