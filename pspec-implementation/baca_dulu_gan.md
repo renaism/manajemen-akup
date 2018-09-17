@@ -7,4 +7,4 @@ Ok teman-teman di sini kita akan bikin kode buat beberapa p-spec dari aplikasi m
 3. Input Pembelian
 4. Input Transaksi
 
-Nah, bahasa yang akan digunakan adalah bahasa isyarat karena kita mau menghargai orang-orang penyandang disabilitas.
+Nah, bahasa yang akan digunakan adalah bahasa Pascal.
