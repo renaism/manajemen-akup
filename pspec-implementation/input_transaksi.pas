@@ -1,3 +1,4 @@
+{Dibuat oleh Rezza Nafi Ismail | 1301160425}
 program input_transaksi;
 
 type
