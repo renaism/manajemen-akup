@@ -1,6 +1,8 @@
 # Manajemen Akup
 Sistem manajemen Rumah Makan Bakso Akup cabang Banjaran.
 
+Aplikasi ini menggunakan framework Django (Python).
+
 Manajemen Akup merupakan tugas besar dari mata kuliah APPL dan IMPAL. **Sangat disarankan untuk membaca [SKPL](https://drive.google.com/file/d/1ZmUsaF-w-lbHVIQ8SbMGmfKJRofpufBP/view?usp=sharing) dan [DPPL](https://drive.google.com/file/d/1JGRJ2zkFRtPUbEdpE5400wFNnw54KaRJ/view?usp=sharing) terlebih dahulu untuk dapat memahami fungsi dari aplikasi ini**. SKPL dan DPPL bisa didapatkan [di sini](https://drive.google.com/drive/folders/1xzuX0f45B-VJ0At7I0y6f2OIdEBuHvpO?usp=sharing).
 
 ## Implementasi P-Spec
