@@ -32,26 +32,36 @@ Untuk lebih jelasnya, video tutorial *step by step* instalasinya akan dibuat ole
 ## A. Clone Repository
 1. Buka suatu folder di File Explorer (misal: D:\GitHub)
 2. Klik kanan, pilih Git Bash Here
-3. Di terminal ketik ini (kalo mau copas harus klik kanan->Paste):
+3. Di terminal masukin *command* ini (kalo mau copas harus klik kanan->Paste):
 ```
 $ git clone https://github.com/renaism/manajemen-akup.git
 ```
 4. Tunggu aja sampe selesai
 
-## B. Setup Laravel dan Dependency
-1. Masih di terminal yang sama `cd` ke folder yang baru dibuat:
+## B. Setup Database MySQL
+1. Buka XAMPP
+2. Jalanin Apache sama MySQL
+3. Buka http://localhost/phpmyadmin/ di browser
+4. Di bagian atas, klik tab Databases
+5. Create database dengan nama "manajemen-akup"
+
+## C. Setup Laravel dan Dependency
+1. Masih di terminal yang sama dari step A, `cd` ke folder yang baru dibuat:
 ```
 $ cd manajemen-akup
 ```
-2. Install *dependency* yang dibutuhin pake composer:
+2. Setup laravel dengan masukin *command* ini satu-satu perbaris:
 ```
 $ composer install
-```
-3. Kalo udah selesai, jalanain *development server* laravel:
+$ cp .env.example .env
+$ php artisan key:generate
+$ php artisan migrate
+``` 
+3. Jalanain *development server* laravel:
 ```
 $ php artisan serve
 ```
-4. Coba test buka alamat http://127.0.0.1:8000/ di browser
+4. Coba test buka http://127.0.0.1:8000/ di browser
 
-## C. Panduan Git
+## D. Panduan Git
 Capek ah udahan dulu. Udah pada jago juga ini.
