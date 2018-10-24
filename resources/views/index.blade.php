@@ -32,7 +32,7 @@
             <div class="col s12 m3 offset-m2">
                 <div class="card grey darken-4">
                     <div class="card-content">
-                        <a href="#" class="card-title white-text">Manajer</a>
+                        <a href="/bahan" class="card-title white-text">Manajer</a>
                     </div>
                 </div>
             </div>
