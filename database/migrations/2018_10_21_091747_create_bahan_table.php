@@ -19,7 +19,7 @@ class CreateBahanTable extends Migration
 
             $table->string('nama', 100);
             $table->string('satuan', 50);
-            $table->decimal('stok', 4, 2);
+            $table->decimal('stok', 8, 2);
         });
     }
 
