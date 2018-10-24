@@ -1,6 +1,19 @@
 # Manajemen Akup
 Sistem manajemen Rumah Makan Bakso Akup cabang Banjaran.
 
+## Validasi Data (Tugas minggu ini)
+### 1. Existence Check
+
+### 2. Data-type Check
+
+### 3. Domain Check
+
+### 4. Combination Check
+
+### 5. Self-checking digit
+
+### 6. Format check
+
 Aplikasi ini menggunakan framework [Laravel](https://laravel.com/).
 
 Manajemen Akup merupakan tugas besar dari mata kuliah APPL dan IMPAL. **Sangat disarankan untuk membaca SKPL dan DPPL terlebih dahulu untuk dapat memahami fungsi dari aplikasi ini**. SKPL dan DPPL bisa didapatkan [di sini](https://drive.google.com/drive/folders/1xzuX0f45B-VJ0At7I0y6f2OIdEBuHvpO?usp=sharing).
@@ -22,10 +35,10 @@ Sintaks SQL yang digunakan untuk membangun *table-table* yang akan digunakan di 
 
 # Project Setup
 
-Hai *guys*!!! B-b-balik lagi sama gua. Di sini gua bakal ngejelasin gimana caranya temen-temen ngejalanin *project* ini di komputer/laptop masing-masing. Oke, pertama temen-temen install dulu semua aplikasi ini:
+Hai *guys*!!! B-b-balik lagi sama gua. Di sini gua bakal ngejelasin gimana caranya temen-temen ngejalanin *project* ini di komputer/laptop masing-masing. Oke, pertama temen-temen install dulu semua aplikasi ini secara berurutan:
 1. [Git](https://git-scm.com/downloads)
-2. [Composer](https://getcomposer.org/download/) (Pilih yang Windows Installer)
-3. [XAMPP](https://www.apachefriends.org/)
+2. [XAMPP](https://www.apachefriends.org/)
+3. [Composer](https://getcomposer.org/download/) (Pilih yang Windows Installer)
 
 Untuk lebih jelasnya, video tutorial *step by step* instalasinya akan dibuat oleh *YouTuber* kebanggan qta (sekaligus *leader* juga) yaitu [Bayu Arifat](https://www.youtube.com/channel/UC71TKqN-dRYpudR2Iv4tuCA/). Pantengin aja terus channelnya hehe jangan lupa subscribe dan klik belnya.
 
@@ -57,7 +70,7 @@ $ cp .env.example .env
 $ php artisan key:generate
 $ php artisan migrate
 ``` 
-3. Jalanain *development server* laravel:
+3. Jalanin *development server* laravel:
 ```
 $ php artisan serve
 ```
