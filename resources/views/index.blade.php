@@ -22,14 +22,18 @@
             </div>
         </div>
         <div class="row">
+            <a href="/bahan" class="waves-effect waves-light grey darken-4 btn">Manajer Dashboard</a>
+        </div>
+        <!--
+        <div class="row">
             <div class="col s12 m3 offset-m2">
                 <div class="card grey darken-4">
                     <div class="card-content">
                             <a href="#" class="card-title white-text">Kasir</a>
                     </div>
-                </div>
-            </div>
-            <div class="col s12 m3 offset-m2">
+                </div> 
+            </div> 
+            <div class="col s12">
                 <div class="card grey darken-4">
                     <div class="card-content">
                         <a href="/bahan" class="card-title white-text">Manajer</a>
@@ -37,6 +41,9 @@
                 </div>
             </div>
         </div>
+        !-->
     </div>
+    <!-- Scripts -->
+    <script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
 </body>
 </html>
