@@ -1,41 +1,51 @@
 # Manajemen Akup
-Sistem manajemen Rumah Makan Bakso Akup cabang Banjaran.
-
-## Validasi Data (Tugas minggu ini)
-### 1. Existence Check
-
-### 2. Data-type Check
-
-### 3. Domain Check
-
-### 4. Combination Check
-
-### 5. Self-checking digit
-
-### 6. Format check
-
-Aplikasi ini menggunakan framework [Laravel](https://laravel.com/).
-
-Manajemen Akup merupakan tugas besar dari mata kuliah APPL dan IMPAL. **Sangat disarankan untuk membaca SKPL dan DPPL terlebih dahulu untuk dapat memahami fungsi dari aplikasi ini**. SKPL dan DPPL bisa didapatkan [di sini](https://drive.google.com/drive/folders/1xzuX0f45B-VJ0At7I0y6f2OIdEBuHvpO?usp=sharing).
-
-## Implementasi P-Spec
-Implementasi *program specification* (P-Spec) dalam bahasa Pascal dapat dilihat di dalam folder [pspec-implementations](https://github.com/renaism/manajemen-akup/tree/master/docs/pspec-implementation). Adapun P-Spec yang diimplementasikan yaitu:
-1. Insert Bahan
-2. Insert Menu
-3. Input Pembelian
-4. Input Transaksi
-
-## Mockup Aplikasi
-*Mockup* dari aplikasi ini dapat dilihat di folder [mockups](https://github.com/renaism/manajemen-akup/tree/master/docs/mockups).
-
-## Database Aplikasi
-Sintaks SQL yang digunakan untuk membangun *table-table* yang akan digunakan di *database* aplikasi ini dapat dilihat di folder [database](https://github.com/renaism/manajemen-akup/tree/master/docs/database).
+Sistem manajemen Rumah Makan Bakso Akup cabang Banjaran. Aplikasi ini menggunakan framework [Laravel](https://laravel.com/). Manajemen Akup merupakan tugas besar dari mata kuliah APPL dan IMPAL. **Sangat disarankan untuk membaca SKPL dan DPPL terlebih dahulu untuk dapat memahami fungsi dari aplikasi ini**. SKPL dan DPPL bisa didapatkan [di sini](https://drive.google.com/drive/folders/1xzuX0f45B-VJ0At7I0y6f2OIdEBuHvpO?usp=sharing).
 
 *Salam profit dari ketua kami, Bayu Arifat Firdaus.*
 
+# Progress Mingguan
+## 1. Screenshot Aplikasi
+<table>
+<tr>
+<td><img src="docs/screenshots/index_bahan.png" alt="Kelola Bahan" height="250"></td>
+<td><img src="docs/screenshots/inser_bahan_01.png" alt="Insert Bahan" height="250"></td>
+</tr>
+<tr>
+<td><small>Kelola Bahan</small></td>
+<td><small>Insert Bahan</small></td>
+</tr>
+</table>
+
+## 2. Validasi Data
+### 1. Existence Check
+Existence check kebanyakan sudah dilakukan secara otomatis oleh fitur Eloquent dari *framework* Laravel. Hal ini khususnya berlaku di bagian `Insert Bahan` di atas.
+
+### 2. Data-type Check
+Pada saat akan memasukkan data bahan ke *database*, di *controller* akan dicek jika *input* dari *user* merupakan tipe data yang bersesuaian. Berikut cuplikan kode untuk memastikan stok yang dimasukkan berupa angka:
+```php
+$this->validate($request, [
+    'nama' => 'required',
+    'satuan' => 'required',
+    'stok' => 'required|numeric'
+]);
+```
+Link ke *source code* => [BahanController.php](app/Http/Controllers/BahanController.php)
+
+### 3. Domain Check
+Untuk bagian `Insert Bahan` tidak menggunakan domain check
+
+### 4. Combination Check
+Untuk bagian `Insert Bahan` tidak menggunakan combination check
+
+### 5. Self-checking digit
+Untuk bagian `Insert Bahan` tidak menggunakan self-checking digit
+
+### 6. Format check
+Untuk bagian `Insert Bahan` tidak menggunakan format check
+
 # Project Setup
 
-Hai *guys*!!! B-b-balik lagi sama gua. Di sini gua bakal ngejelasin gimana caranya temen-temen ngejalanin *project* ini di komputer/laptop masing-masing. Oke, pertama temen-temen install dulu semua aplikasi ini secara berurutan:
+Di sini gua bakal ngejelasin gimana caranya temen-temen ngejalanin *project* ini di komputer/laptop masing-masing. Oke, pertama temen-temen install dulu semua aplikasi ini secara berurutan:
 1. [Git](https://git-scm.com/downloads)
 2. [XAMPP](https://www.apachefriends.org/)
 3. [Composer](https://getcomposer.org/download/) (Pilih yang Windows Installer)
@@ -75,6 +85,8 @@ $ php artisan migrate
 $ php artisan serve
 ```
 4. Coba test buka http://127.0.0.1:8000/ di browser
+5. ???
+6. *Profit!!!*
 
 ## D. Panduan Git
 Capek ah udahan dulu. Udah pada jago juga ini.
