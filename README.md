@@ -29,7 +29,7 @@ $this->validate($request, [
     'stok' => 'required|numeric'
 ]);
 ```
-Link ke *source code* => [BahanController.php](app/Http/Controllers/BahanController.php)
+Link ke *source code* => [`BahanController.php`](app/Http/Controllers/BahanController.php)
 
 ### 3. Domain Check
 Untuk bagian `Insert Bahan` tidak menggunakan domain check
@@ -42,6 +42,11 @@ Untuk bagian `Insert Bahan` tidak menggunakan self-checking digit
 
 ### 6. Format check
 Untuk bagian `Insert Bahan` tidak menggunakan format check
+
+## 3. Penerapan MVC di Laravel
+* Model dari aplikasi ada di folder [`app`](app/) (Contoh: [`Bahan.php`](app/Bahan.php))
+* View dari aplikasi ada di foler [`resources/views`](resources/views/) (Contoh: [`create.blade.php`](resources/views/bahan/create.blade.php))
+* Controller dari aplikasi ada di folder [`app/Http/Controllers`](app/Http/Controllers/) (Contoh: [`BahanController.php`](app/Http/Controllers/BahanController.php))
 
 # Project Setup
 
