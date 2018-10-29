@@ -4,6 +4,9 @@ Sistem manajemen Rumah Makan Bakso Akup cabang Banjaran. Aplikasi ini menggunaka
 *Salam profit dari ketua kami, Bayu Arifat Firdaus.*
 
 # Progress Mingguan
+## Cyclomatic Complexity
+Laporan: https://docs.google.com/document/d/1iJhwsOc5Xt81xI1PcCz37eL9Ysw4gXoX84zqegTLGI0/edit?usp=sharing
+
 ## 1. Screenshot Aplikasi
 <table>
 <tr>
