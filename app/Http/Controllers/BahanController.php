@@ -71,7 +71,8 @@ class BahanController extends Controller
      */
     public function edit($id)
     {
-        //
+        $bahan = Bahan::find($id);
+        return view('bahan.edit')->with('bahan', $bahan);
     }
 
     /**
@@ -83,7 +84,19 @@ class BahanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'nama' => 'required',
+            'satuan' => 'required',
+            'stok' => 'required|numeric'
+        ]);
+
+        $bahan = Bahan::find($id);
+        $bahan->nama = $request->input('nama');
+        $bahan->satuan = $request->input('satuan');
+        $bahan->stok = $request->input('stok');
+        $bahan->save();
+
+        return redirect('/bahan')->with('success', 'Bahan berhasil di-update');
     }
 
     /**
@@ -94,6 +107,8 @@ class BahanController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $bahan = Bahan::find($id);
+        $bahan->delete();
+        return redirect('/bahan')->with('success', 'Bahan berhasil dihapus');
     }
 }
