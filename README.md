@@ -19,19 +19,19 @@ Sistem manajemen Rumah Makan Bakso Akup cabang Banjaran. Aplikasi ini menggunaka
 ## 2. Equivalence Partition Testing
 ### A. Class Bahan
 Pada proses insert data bahan, terdapat data *field* berupa stok yang berupa angka dan mempunyai range dari 0 sampai 999,999.99 (desimal). Berdasarkan kriteria tersebut, partisi dari testing yang dilakukan adalah:
-Stok | Expected Outcome
---- | ---
-<0 | Ditolak sistem (**Invalid**) 
-0-999,999.99 | Diterima sistem (**Valid**) 
->999,999.99 | Ditolak sistem (**Invalid**)
+
+**Stok**:
+* < 0 : Ditolak sistem (**Invalid**) 
+* 0 - 999,999.99 : Diterima sistem (**Valid**) 
+* \> 999,999.99 : Ditolak sistem (**Invalid**)
 
 ## B. Class Menu
 Pada proses insert menu, terdapat data *field* berupa harga yang merupakan angka dan mempunyai range dari 0 sampai 99,999,999 (integer). Berdasarkan kriteria tersebut, partisi dari testing yang dilakukan adalah:
-Harga | Expected Outcome
---- | ---
-<0 | Ditolak sistem (**Invalid**) 
-0-99,999,999 | Diterima sistem (**Valid**) 
->99,999,999 | Ditolak sistem (**Invalid**)
+
+**Harga**:
+* < 0 : Ditolak sistem (**Invalid**) 
+* 0 - 99,999,999 : Diterima sistem (**Valid**) 
+* \> 99,999,999 : Ditolak sistem (**Invalid**)
 
 ## 3. Penerapan MVC di Laravel
 * Model dari aplikasi ada di folder [`app`](app/) (Contoh: [`Bahan.php`](app/Bahan.php))
