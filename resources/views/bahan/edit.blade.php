@@ -15,7 +15,7 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s3">
-                        <input type="number" name="stok" step="any" min="0" value='{{ $bahan->stok }}'>
+                        <input type="number" name="stok" step="any" value='{{ $bahan->stok }}'>
                         <label>Stok Awal</label>
                     </div>
                     <div class="input-field col s9">

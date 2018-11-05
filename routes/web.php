@@ -16,3 +16,4 @@ Route::get('/', function () {
 });
 
 Route::resource('bahan', 'BahanController');
+Route::resource('menu', 'MenuController');

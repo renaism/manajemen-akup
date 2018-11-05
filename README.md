@@ -4,9 +4,6 @@ Sistem manajemen Rumah Makan Bakso Akup cabang Banjaran. Aplikasi ini menggunaka
 *Salam profit dari ketua kami, Bayu Arifat Firdaus.*
 
 # Progress Mingguan
-## Cyclomatic Complexity
-Laporan: https://docs.google.com/document/d/1iJhwsOc5Xt81xI1PcCz37eL9Ysw4gXoX84zqegTLGI0/edit?usp=sharing
-
 ## 1. Screenshot Aplikasi
 <table>
 <tr>
@@ -19,32 +16,22 @@ Laporan: https://docs.google.com/document/d/1iJhwsOc5Xt81xI1PcCz37eL9Ysw4gXoX84z
 </tr>
 </table>
 
-## 2. Validasi Data
-### 1. Existence Check
-Existence check kebanyakan sudah dilakukan secara otomatis oleh fitur Eloquent dari *framework* Laravel. Hal ini khususnya berlaku di bagian `Insert Bahan` di atas.
+## 2. Equivalence Partition Testing
+### A. Class Bahan
+Pada proses insert data bahan, terdapat data *field* berupa stok yang berupa angka dan mempunyai range dari 0 sampai 999,999.99 (desimal). Berdasarkan kriteria tersebut, partisi dari testing yang dilakukan adalah:
+Stok | Expected Outcome
+--- | ---
+<0 | Ditolak sistem (**Invalid**) 
+0-999,999.99 | Diterima sistem (**Valid**) 
+>999,999.99 | Ditolak sistem (**Invalid**)
 
-### 2. Data-type Check
-Pada saat akan memasukkan data bahan ke *database*, di *controller* akan dicek jika *input* dari *user* merupakan tipe data yang bersesuaian. Berikut cuplikan kode untuk memastikan stok yang dimasukkan berupa angka:
-```php
-$this->validate($request, [
-    'nama' => 'required',
-    'satuan' => 'required',
-    'stok' => 'required|numeric'
-]);
-```
-Link ke *source code* => [`BahanController.php`](app/Http/Controllers/BahanController.php)
-
-### 3. Domain Check
-Untuk bagian `Insert Bahan` tidak menggunakan domain check
-
-### 4. Combination Check
-Untuk bagian `Insert Bahan` tidak menggunakan combination check
-
-### 5. Self-checking digit
-Untuk bagian `Insert Bahan` tidak menggunakan self-checking digit
-
-### 6. Format check
-Untuk bagian `Insert Bahan` tidak menggunakan format check
+## B. Class Menu
+Pada proses insert menu, terdapat data *field* berupa harga yang merupakan angka dan mempunyai range dari 0 sampai 99,999,999 (integer). Berdasarkan kriteria tersebut, partisi dari testing yang dilakukan adalah:
+Harga | Expected Outcome
+--- | ---
+<0 | Ditolak sistem (**Invalid**) 
+0-99,999,999 | Diterima sistem (**Valid**) 
+>99,999,999 | Ditolak sistem (**Invalid**)
 
 ## 3. Penerapan MVC di Laravel
 * Model dari aplikasi ada di folder [`app`](app/) (Contoh: [`Bahan.php`](app/Bahan.php))

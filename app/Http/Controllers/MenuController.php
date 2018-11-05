@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\Bahan;
+use App\Menu;
 
-class BahanController extends Controller
+class MenuController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class BahanController extends Controller
      */
     public function index()
     {
-        $daftarBahan = Bahan::orderBy('nama', 'asc')->paginate(10);
-        return view('bahan.index')->with('daftarBahan', $daftarBahan);
+        $daftarMenu = Menu::orderBy('nama', 'asc')->paginate(10);
+        return view('menu.index')->with('daftarMenu', $daftarMenu);
     }
 
     /**
@@ -26,7 +26,7 @@ class BahanController extends Controller
      */
     public function create()
     {
-        return view('bahan.create');
+        return view('menu.create');
     }
 
     /**
@@ -39,17 +39,15 @@ class BahanController extends Controller
     {
         $this->validate($request, [
             'nama' => 'required',
-            'satuan' => 'required',
-            'stok' => 'required|numeric|gte:0'
+            'harga' => 'required|integer|gte:0|lte:99999999'
         ]);
 
-        $bahan = new Bahan;
-        $bahan->nama = $request->input('nama');
-        $bahan->satuan = $request->input('satuan');
-        $bahan->stok = $request->input('stok');
-        $bahan->save();
+        $menu = new Menu;
+        $menu->nama = $request->input('nama');
+        $menu->harga = $request->input('harga');
+        $menu->save();
 
-        return redirect('/bahan')->with('success', 'Bahan berhasil ditambahkan');
+        return redirect('/menu')->with('success', 'Menu berhasil ditambahkan');
     }
 
     /**
@@ -71,8 +69,8 @@ class BahanController extends Controller
      */
     public function edit($id)
     {
-        $bahan = Bahan::find($id);
-        return view('bahan.edit')->with('bahan', $bahan);
+        $menu = Menu::find($id);
+        return view('menu.edit')->with('menu', $menu);
     }
 
     /**
@@ -86,17 +84,15 @@ class BahanController extends Controller
     {
         $this->validate($request, [
             'nama' => 'required',
-            'satuan' => 'required',
-            'stok' => 'required|numeric|gte:0|lte:999999.99'
+            'harga' => 'required|integer|gte:0|lte:99999999'
         ]);
 
-        $bahan = Bahan::find($id);
-        $bahan->nama = $request->input('nama');
-        $bahan->satuan = $request->input('satuan');
-        $bahan->stok = $request->input('stok');
-        $bahan->save();
+        $menu = Menu::find($id);
+        $menu->nama = $request->input('nama');
+        $menu->harga = $request->input('harga');
+        $menu->save();
 
-        return redirect('/bahan')->with('success', 'Bahan berhasil di-update');
+        return redirect('/menu')->with('success', 'Menu berhasil di-update');
     }
 
     /**
@@ -107,8 +103,8 @@ class BahanController extends Controller
      */
     public function destroy($id)
     {
-        $bahan = Bahan::find($id);
-        $bahan->delete();
-        return redirect('/bahan')->with('success', 'Bahan berhasil dihapus');
+        $menu = Menu::find($id);
+        $menu->delete();
+        return redirect('/menu')->with('success', 'Menu berhasil dihapus');
     }
 }
