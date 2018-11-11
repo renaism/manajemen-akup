@@ -17,7 +17,7 @@ Sistem manajemen Rumah Makan Bakso Akup cabang Banjaran. Aplikasi ini menggunaka
 </table>
 
 ## 2. Testing dengan PHPUnit
-Dengan menggunakan PHPUnit yang sudah disertakan dengan laravel, akan diimplementasikan partition testing pada class Bahan. Untuk detail partition testing dapat dilihati [di sini](weekly-progress-archive/02.md). Berikut merupakan cuplikan kode dari [`BahanTest.php`](tests/Unit/BahanTest.php)
+Dengan menggunakan PHPUnit yang sudah disertakan dengan Laravel, diimplementasikan partition testing pada class Bahan. Untuk detail partition testing dapat dilihat [di sini](weekly-progress-archive/02.md). Berikut merupakan cuplikan kode dari [`BahanTest.php`](tests/Unit/BahanTest.php)
 ### A. Test Input Valid
 ```php
 public function testAcceptExample()
@@ -86,6 +86,7 @@ PHPUnit dijalankan dengan menggunakan command berikut:
 $ vendor/bin/phpunit tests/Unit/BahanTest.php
 ```
 Hasil dari testing (berhasil):
+
 ![Hasil testing](docs/screenshots/testing_01.png)
 
 ## 3. Penerapan MVC di Laravel
