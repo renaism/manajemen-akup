@@ -16,22 +16,77 @@ Sistem manajemen Rumah Makan Bakso Akup cabang Banjaran. Aplikasi ini menggunaka
 </tr>
 </table>
 
-## 2. Equivalence Partition Testing
-### A. Class Bahan
-Pada proses insert data bahan, terdapat data *field* berupa stok yang berupa angka dan mempunyai range dari 0 sampai 999,999.99 (desimal). Berdasarkan kriteria tersebut, partisi dari testing yang dilakukan adalah:
+## 2. Testing dengan PHPUnit
+Dengan menggunakan PHPUnit yang sudah disertakan dengan laravel, akan diimplementasikan partition testing pada class Bahan. Untuk detail partition testing dapat dilihati [di sini](weekly-progress-archive/02.md). Berikut merupakan cuplikan kode dari [`BahanTest.php`](tests/Unit/BahanTest.php)
+### A. Test Input Valid
+```php
+public function testAcceptExample()
+{
+    // Create bahan with stok in both acceptable extreme
+    $bahan_lb = factory('App\Bahan')->make([
+        'stok' => 0
+    ]);
+    $bahan_up = factory('App\Bahan')->make([
+        'stok' => 999999.99
+    ]);
 
-**Stok**:
-* < 0 : Ditolak sistem (**Invalid**) 
-* 0 - 999,999.99 : Diterima sistem (**Valid**) 
-* \> 999,999.99 : Ditolak sistem (**Invalid**)
+    $this->call('POST', 'bahan', [
+        'nama' => $bahan_lb->nama,
+        'satuan' => $bahan_lb->satuan,
+        'stok' => $bahan_lb->stok
+    ]);
 
-## B. Class Menu
-Pada proses insert menu, terdapat data *field* berupa harga yang merupakan angka dan mempunyai range dari 0 sampai 99,999,999 (integer). Berdasarkan kriteria tersebut, partisi dari testing yang dilakukan adalah:
+    $this->call('POST', 'bahan', [
+        'nama' => $bahan_up->nama,
+        'satuan' => $bahan_up->satuan,
+        'stok' => $bahan_up->stok
+    ]);
 
-**Harga**:
-* < 0 : Ditolak sistem (**Invalid**) 
-* 0 - 99,999,999 : Diterima sistem (**Valid**) 
-* \> 99,999,999 : Ditolak sistem (**Invalid**)
+    // Get created bahan
+    $daftar_bahan = Bahan::all();
+
+    // Assertion
+    $this->assertCount(2, $daftar_bahan);
+}
+```
+### B. Test Input Invalid
+```php
+public function testRejectExample()
+{
+    // Create bahan with stok in both unacceptable extreme
+    $bahan_lb = factory('App\Bahan')->make([
+        'stok' => -0.01
+    ]);
+    $bahan_up = factory('App\Bahan')->make([
+        'stok' => 1000000.00
+    ]);
+
+    $this->call('POST', 'bahan', [
+        'nama' => $bahan_lb->nama,
+        'satuan' => $bahan_lb->satuan,
+        'stok' => $bahan_lb->stok
+    ]);
+
+    $this->call('POST', 'bahan', [
+        'nama' => $bahan_up->nama,
+        'satuan' => $bahan_up->satuan,
+        'stok' => $bahan_up->stok
+    ]);
+
+    // Try to get bahan
+    $daftar_bahan = Bahan::all();
+
+    // Assertion
+    $this->assertCount(0, $daftar_bahan);
+}
+```
+### C. Hasil Testing
+PHPUnit dijalankan dengan menggunakan command berikut:
+```
+$ vendor/bin/phpunit tests/Unit/BahanTest.php
+```
+Hasil dari testing (berhasil):
+![Hasil testing](docs/screenshots/testing_01.png)
 
 ## 3. Penerapan MVC di Laravel
 * Model dari aplikasi ada di folder [`app`](app/) (Contoh: [`Bahan.php`](app/Bahan.php))
