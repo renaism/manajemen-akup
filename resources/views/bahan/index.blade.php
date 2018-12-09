@@ -1,12 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
-@section('content')
+@section('main-content')
     <h3>Daftar Bahan</h3>
-    <div class="card black-text">
-        <div class="card-content">
-            <a class="waves-effect waves-light btn grey darken-3" href="/bahan/create">Insert Bahan</a>
+    <div class="card">
+        <div class="card-body">
+            <a class="btn btn-primary" href="/bahan/create">Insert Bahan</a>
             @if(count($daftarBahan) > 0)
-                <table class="highlight">
+                <table class="table table-dark table-hover">
                     <thead>
                         <tr>
                             <th>Bahan</th>
@@ -21,13 +21,13 @@
                                 <td>{{ $bahan->nama }}</td>
                                 <td>{{ $bahan->stok }} {{ $bahan->satuan }}</td>
                                 <td>
-                                    <a class="waves-effect waves-light btn right" href="/bahan/{{ $bahan->id }}/edit">Edit</a>
+                                    <a class="btn btn-primary" href="/bahan/{{ $bahan->id }}/edit">Edit</a>
                                 </td>
                                 <td>
                                     <form method="POST" action="{{ action('BahanController@destroy', $bahan->id) }}" class="left">
                                         @method('DELETE')
                                         @csrf
-                                        <button type="submit" class="waves-effect waves-light btn red">Hapus</button>
+                                        <button type="submit" class="btn btn-danger">Hapus</button>
                                     </form>
                                 </td>
                             </tr>

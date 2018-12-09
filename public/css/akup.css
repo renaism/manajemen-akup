@@ -1,0 +1,41 @@
+:root {
+    --akup-red: #A10D17;
+    --akup-yellow: #EDB903;
+    --akup-light: #FDFFFC;
+}
+
+body {
+    background-color: var(--akup-red);
+    color: var(--akup-light);
+}
+
+#welcome hr {
+    border-color: var(--akup-light);
+}
+
+#welcome #welcomeButtons {
+    padding: 0 250px;
+}
+
+.navbar {
+    background-color: var(--akup-yellow);
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -99; /* Behind the navbar */
+    padding: 48px 0 0; /* Height of navbar */
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+  
+.sidebar-sticky {
+    position: relative;
+    top: 0;
+    height: calc(100vh - 48px);
+    padding-top: .5rem;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
