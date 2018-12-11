@@ -1,47 +1,44 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
-@section('content')
-    <form method="POST" action="{{ action('BahanController@store') }}" accept-charset="UTF-8">
-        @csrf
-        <div class="card black-text" style="margin-top: 48px">
-            <div class="card-content">
-                <span class="card-title">Insert Bahan</span>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input type="text" name="nama" data-length="100">
-                        <label>Nama Bahan</label> 
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s3">
-                        <input type="number" name="stok" step="any">
-                        <label>Stok Awal</label>
-                    </div>
-                    <div class="input-field col s9">
-                        <select name="satuan">
-                            <option value="" disabled selected>Pilih Satuan</option>
-                            <option value="g">gram (g)</option>
-                            <option value="kg">kilogram (kg)</option>
-                            <option value="l">liter (l)</option>
-                            <option value="sat">satuan</option>
-                        </select>
-                        <label>Satuan</label>
-                    </div>
-                </div>
-            </div>
-            <div class="card-action">
-                <button type="submit" class="waves-effect waves-light btn">Insert</button>
-                <a class="waves-effect waves-light btn red right" href="/bahan">Cancel</a>
-            </div>
-        </div>
-    </form>
+@section('header')
+    <span class="oi oi-plus"></span>&nbsp;Insert Bahan
 @endsection
 
-@section('script')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var elems = document.querySelectorAll('select');
-            var instances = M.FormSelect.init(elems, {});
-        });
-    </script>
+@section('main-content')
+    <div class="card text-dark mt-4">
+        <div class="card-body">
+            @section('form-action')
+            <form method="POST" action="{{ action('BahanController@store') }}" accept-charset="UTF-8">
+            @show
+                @csrf
+                <div class="form-group">
+                    <label for="inputNama">Nama Bahan</label>
+                    <input type="text" name="nama" class="form-control form-control-lg" id="inputNama" value="@section('nama'){{ old('nama') }}@show">
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="inputStok">Stok</label>
+                        <input type="number" name="stok" class="form-control form-control-lg" step="any" id="inputStok" value="@section('stok'){{ old('stok') }}@show">
+                    </div>
+                    <div class="form-group col-md-8">
+                        <label for="inputSatuan">Satuan</label>
+                        @php($s = (isset($bahan)) ? $bahan->satuan : old('satuan'))
+                        <select name="satuan" id="inputSatuan" class="custom-select custom-select-lg">
+                            <option value="" disabled selected>Pilih Satuan...</option>
+                            <option value="g" @if($s=='g') selected @endif>Gram (g)</option>
+                            <option value="kg" @if($s=='kg') selected @endif>Kilogram (kg)</option>
+                            <option value="l" @if($s=='l') selected @endif>Liter (L)</option>
+                            <option value="sat" @if($s=='sat') selected @endif>Satuan (Buah)</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-lg btn-primary mt-4">
+                    @section('form-submit')
+                        <span class="oi oi-plus"></span>&nbsp;&nbsp;Insert
+                    @show 
+                </button>
+                <a href="/bahan" class="btn btn-lg btn-danger float-right mt-4">Cancel</a>
+            </form>   
+        </div>
+    </div>
 @endsection

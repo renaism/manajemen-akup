@@ -8,8 +8,8 @@ class Menu extends Model
 {
     protected $table = 'menu';
 
-    public function bahan()
+    public function daftarBahan()
     {
-        return $this->belongsToMany('App\Bahan', 'pakai')->withPivot('jumlah');
+        return $this->belongsToMany('App\Bahan', 'pakai')->using('App\Pakai')->withPivot('jumlah');
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Menu;
+use App\Bahan;
 
 class MenuController extends Controller
 {
@@ -26,7 +27,7 @@ class MenuController extends Controller
      */
     public function create()
     {
-        return view('menu.create');
+        return view('menu.create')->with('daftarBahan', Bahan::all());
     }
 
     /**
@@ -46,6 +47,14 @@ class MenuController extends Controller
         $menu->nama = $request->input('nama');
         $menu->harga = $request->input('harga');
         $menu->save();
+
+        foreach ($request->input('daftarBahan') as $key => $bahan_id) {
+            $menu->daftarBahan()->attach($bahan_id, [
+                'jumlah' => $request->input('jumlahBahan')[$key]
+            ]);
+        }
+
+        $menu->push();
 
         return redirect('/menu')->with('success', 'Menu berhasil ditambahkan');
     }
@@ -70,7 +79,7 @@ class MenuController extends Controller
     public function edit($id)
     {
         $menu = Menu::find($id);
-        return view('menu.edit')->with('menu', $menu);
+        return view('menu.edit')->with('menu', $menu)->with('daftarBahan', Bahan::all());;
     }
 
     /**
@@ -90,7 +99,13 @@ class MenuController extends Controller
         $menu = Menu::find($id);
         $menu->nama = $request->input('nama');
         $menu->harga = $request->input('harga');
-        $menu->save();
+        $daftarBahan = [];
+        foreach ($request->input('daftarBahan') as $key => $bahan_id) {
+            $daftarBahan[$bahan_id] = ['jumlah' => $request->input('jumlahBahan')[$key]]; 
+        }
+        $menu->daftarBahan()->sync($daftarBahan);
+
+        $menu->push();
 
         return redirect('/menu')->with('success', 'Menu berhasil di-update');
     }
@@ -104,6 +119,7 @@ class MenuController extends Controller
     public function destroy($id)
     {
         $menu = Menu::find($id);
+        $menu->daftarBahan()->detach();
         $menu->delete();
         return redirect('/menu')->with('success', 'Menu berhasil dihapus');
     }

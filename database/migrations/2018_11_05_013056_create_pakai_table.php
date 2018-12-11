@@ -14,9 +14,10 @@ class CreatePakaiTable extends Migration
     public function up()
     {
         Schema::create('pakai', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('bahan_id')->unsigned();
             $table->integer('menu_id')->unsigned();
-            $table->integer('jumlah');
+            $table->decimal('jumlah', 8, 2);
         });
     }
 

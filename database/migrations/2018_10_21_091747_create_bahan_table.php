@@ -17,7 +17,7 @@ class CreateBahanTable extends Migration
             $table->increments('id');
             $table->timestamps();
 
-            $table->string('nama', 100);
+            $table->string('nama')->unique();
             $table->string('satuan', 50);
             $table->decimal('stok', 8, 2);
         });
