@@ -38,14 +38,14 @@
         </div>
     </div>
     <div class="form-inline bahan-template d-none">
-        <select name="daftarBahan[]" id="bahan" class="custom-select flex-grow-1 mb-2 mr-2">
+        <select name="daftarBahan[]" class="custom-select flex-grow-1 mb-2 mr-2">
             <option value="" disabled selected>Pilih Bahan...</option>
             @foreach ($daftarBahan as $bahan)
                 <option value="{{ $bahan->id }}">{{ $bahan->nama }}</option>
             @endforeach
         </select>
         <div class="input-group mb-2 mr-2 w-25">
-            <input type="number" name="jumlahBahan[]" class="form-control" step="any" id="inputJumlahBahan" placeholder="Jumlah">
+            <input type="number" name="jumlahBahan[]" class="form-control" step="any" placeholder="Jumlah">
             <div class="input-group-append">
                 <span class="input-group-text">buah</span>
             </div>
@@ -55,7 +55,7 @@
         </button>
     </div>
 @endsection
-@section('script')
+@push('scripts')
     <script>
         $("#addBahanBtn").click(function(e) {
             e.preventDefault();
@@ -66,4 +66,4 @@
             $(this).parent().remove();
         })
     </script>
-@endsection
+@endpush

@@ -16,6 +16,9 @@ class PembelianController extends Controller
     public function index()
     {
         $daftarPembelian = Pembelian::orderBy('tanggal', 'desc')->paginate(10);
+        foreach ($daftarPembelian as $pembelian) {
+            $pembelian->nama = 'Pembelian '.$pembelian->bahan->nama.' sejumlah '.$pembelian->jumlah.' '.$pembelian->bahan->satuan;
+        }
         return view('pembelian.index')->with('daftarPembelian', $daftarPembelian);
     }
 
@@ -37,7 +40,26 @@ class PembelianController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'bahan' => 'required',
+            'jumlah' => 'required',
+            'harga' => 'required',
+            'tanggal' => 'required|date'
+        ]);
+
+        $pembelian = new Pembelian;
+        $bahan = Bahan::find($request->input('bahan'));
+
+        $pembelian->jumlah = $request->input('jumlah');
+        $pembelian->harga = $request->input('harga');
+        $pembelian->tanggal = $request->input('tanggal');
+        $pembelian->bahan()->associate($bahan);
+
+        $pembelian->bahan->stok += $pembelian->jumlah;
+
+        $pembelian->push();
+
+        return redirect('/pembelian')->with('success', 'Pembelian berhasil ditambahkan');
     }
 
     /**
@@ -57,9 +79,10 @@ class PembelianController extends Controller
      * @param  \App\Pembelian  $pembelian
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pembelian $pembelian)
+    public function edit($id)
     {
-        //
+        $pembelian = Pembelian::find($id);
+        return view('pembelian.edit')->with('pembelian', $pembelian)->with('daftarBahan', []);
     }
 
     /**
@@ -69,9 +92,26 @@ class PembelianController extends Controller
      * @param  \App\Pembelian  $pembelian
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pembelian $pembelian)
+    public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'jumlah' => 'required',
+            'harga' => 'required',
+            'tanggal' => 'required|date'
+        ]);
+
+        $pembelian = Pembelian::find($id);
+        
+        $jumlah_diff = $request->input('jumlah') - $pembelian->jumlah;
+        $pembelian->jumlah = $request->input('jumlah');
+        $pembelian->harga = $request->input('harga');
+        $pembelian->tanggal = $request->input('tanggal');
+
+        $pembelian->bahan->stok += $jumlah_diff;
+
+        $pembelian->push();
+
+        return redirect('/pembelian')->with('success', 'Pembelian berhasil di-update');
     }
 
     /**
@@ -80,8 +120,12 @@ class PembelianController extends Controller
      * @param  \App\Pembelian  $pembelian
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pembelian $pembelian)
+    public function destroy($id)
     {
-        //
+        $pembelian = Pembelian::find($id);
+        $pembelian->bahan->stok -= $pembelian->jumlah;
+        $pembelian->bahan->save();
+        $pembelian->delete();
+        return redirect('/pembelian')->with('success', 'Pembelian berhasil dihapus');
     }
 }

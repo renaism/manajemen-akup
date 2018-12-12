@@ -79,7 +79,7 @@ class MenuController extends Controller
     public function edit($id)
     {
         $menu = Menu::find($id);
-        return view('menu.edit')->with('menu', $menu)->with('daftarBahan', Bahan::all());;
+        return view('menu.edit')->with('menu', $menu)->with('daftarBahan', Bahan::all());
     }
 
     /**
