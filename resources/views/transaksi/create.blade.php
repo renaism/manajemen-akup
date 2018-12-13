@@ -32,10 +32,10 @@
                                 </div>
                                 <div class="menu-qty w-25 d-flex align-items-end">
                                     <div class="input-group">
-                                        <input type="hidden" id="menuId" value="{{ $menu->id }}">
                                         <div class="input-group-prepend">
                                             <button type="button" class="btn minus">&minus;</button>
                                         </div>
+                                        <input type="hidden" id="menuId" value="{{ $menu->id }}">
                                         <input type="number" name="jumlah[{{ $menu->id }}]" id="inputJumlah{{ $menu->id }}" readonly step="1" min="0" class="form-control" value="{{ old('jumlah.'.$menu->id, '0') }}">
                                         <div class="input-group-append">
                                             <button type="button" class="btn plus">&plus;</button>

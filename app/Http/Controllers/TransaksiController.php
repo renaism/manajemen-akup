@@ -35,6 +35,7 @@ class TransaksiController extends Controller
 
     private function cekKetersediaan($daftar_pesan) {
         $bahan_needed = [];
+        $bahan_lack = [];
         foreach ($daftar_pesan as $menu_id => $jumlah) {
             $menu = Menu::find($menu_id);
             foreach ($menu->daftarBahan as $bahan) {
@@ -50,10 +51,10 @@ class TransaksiController extends Controller
         foreach ($bahan_needed as $bahan_id => $needed) {
             $bahan = Bahan::find($bahan_id);
             if ($bahan->stok < $needed) {
-                return false;
+                $bahan_lack[] = $bahan;
             }
         }
-        return true;
+        return $bahan_lack;
     }
 
     /**
@@ -64,13 +65,31 @@ class TransaksiController extends Controller
      */
     public function store(Request $request)
     {
-        $bahan_available = $this->cekKetersediaan($request->input('jumlah'));
-        if($bahan_available) {
-            $transaksi = new Transaksi;
-            return redirect('/transaksi/create')->with('success', 'Bahan tersedia');
+        $bahan_lack = $this->cekKetersediaan($request->input('jumlah'));
+        if(count($bahan_lack) > 0) {
+            $bahan_lack_string = "";
+            for($i = 0; $i < count($bahan_lack)-1; $i++) {
+                $bahan_lack_string .= $bahan_lack[$i]->nama . ', ';
+            }
+            $bahan_lack_string .= $bahan_lack[$i]->nama;
+            return back()->withInput()->with('error', 'Bahan berikut kurang: '.$bahan_lack_string);
         }
         else {
-            return back()->withInput()->with('error', 'Bahan tidak cukpu');
+            $transaksi = new Transaksi;
+            $transaksi->tanggal = date('Y-m-d H:i:s');
+            $transaksi->harga_total = 0;
+            $transaksi->save();
+            foreach ($request->input('jumlah') as $menu_id => $jumlah) {
+                if ($jumlah > 0) {
+                    $transaksi->daftarMenu()->attach($menu_id, [
+                        'jumlah' => $jumlah
+                    ]);
+                    $menu = Menu::find($menu_id);
+                    $transaksi->harga_total += $menu->harga * $jumlah;
+                }
+            }
+            $transaksi->save();
+            return redirect('/transaksi/'.$transaksi->id)->with('success', 'Transaksi terekam');
         }
     }
 
@@ -80,9 +99,10 @@ class TransaksiController extends Controller
      * @param  \App\Transaksi  $transaksi
      * @return \Illuminate\Http\Response
      */
-    public function show(Transaksi $transaksi)
+    public function show($id)
     {
-        //
+        $transaksi = Transaksi::find($id);
+        return view('transaksi.show')->with('transaksi', $transaksi);
     }
 
     /**

@@ -3,6 +3,7 @@
     --akup-yellow: #EDB903;
     --akup-light: #FDFFFC;
     --akup-dark: #011627;
+    --akup-secondary: #CECECE;
 }
 
 body {
@@ -12,6 +13,10 @@ body {
 
 hr {
     border-color: var(--akup-light);
+}
+
+.card hr {
+    border-color: var(--akup-secondary);
 }
 
 #welcome #welcomeButtons {

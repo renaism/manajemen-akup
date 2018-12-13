@@ -5,7 +5,7 @@
 @endsection
 @section('main-content')
     @if(count($daftarTransaksi) > 0)
-        <a href="/pembelian/create" class="btn btn-lg btn-light mt-2">
+        <a href="/transaksi/create" class="btn btn-lg btn-light mt-2">
             <span class="oi oi-plus"></span>&nbsp;Input Transaksi
         </a>
         <table class="table table-light text-dark table-hover my-4">
@@ -24,12 +24,12 @@
                 @foreach($daftarTransaksi as $transaksi)
                     <tr>
                         <td>{{ $i++ }}</td>
-                        <td>{{ $transaksi->tanggal }}</td>
-                        <td>{{ $transaksi->tanggal }}</td>
+                        <td>{{ date('d F Y', strtotime($transaksi->tanggal)) }}</td>
+                        <td>{{ date('H:i', strtotime($transaksi->tanggal)) }}</td>
                         <td>Rp{{ $transaksi->harga_total }},-</td>
                         <td>
-                            <a class="btn btn-primary float-right" href="/transaksi/{{ $transaksi->id }}/edit">
-                                <span class="oi oi-pencil"></span>&nbsp;Edit
+                            <a class="btn btn-primary float-right" href="/transaksi/{{ $transaksi->id }}">
+                                <span class="oi oi-eye"></span>&nbsp;Lihat
                             </a>
                         </td>
                         <td>
