@@ -36,7 +36,7 @@
                                         <div class="input-group-prepend">
                                             <button type="button" class="btn minus">&minus;</button>
                                         </div>
-                                        <input type="number" name="jumlah[{{ $menu->id }}]" id="inputJumlah{{ $menu->id }}" step="1" min="0" class="form-control" value="0">
+                                        <input type="number" name="jumlah[{{ $menu->id }}]" id="inputJumlah{{ $menu->id }}" readonly step="1" min="0" class="form-control" value="{{ old('jumlah.'.$menu->id, '0') }}">
                                         <div class="input-group-append">
                                             <button type="button" class="btn plus">&plus;</button>
                                         </div>
@@ -55,18 +55,18 @@
                         <div class="card-body" id="daftarPesanan">
                             <table class="table table-borderless"><tbody>
                             @foreach ($daftarMenu as $menu)
-                                <tr id="pesanMenu{{ $menu->id }}" class="d-none">
+                                <tr id="pesanMenu{{ $menu->id }}" class="d-none menu-item">
                                     <input type="hidden" class="menu-id" value="{{ $menu->id }}">
                                     <input type="hidden" class="menu-harga" value="{{ $menu->harga }}">
                                     <input type="hidden" class="pesan-jumlah" value="0">
                                     <td>{{ $menu->nama }}</td>
-                                    <td class="jumlah-pesan text-right">0</td>
-                                    <td class="harga-sub text-right">0</td>
+                                    <td class="text-right">x<span class="jumlah-pesan">0</span></td>
+                                    <td class="text-right">Rp<span class="harga-sub">0</span>,-</td>
                                 </tr>
                             @endforeach
                             <tr>
                                 <td>Subtotal</td>
-                                <td colspan="2" class="text-right">Rp<span id="subTotal">500.000</span>,-</td>
+                                <td colspan="2" class="text-right">Rp<span id="subTotal">0</span>,-</td>
                             </tr>
                             </tbody></table>
                         </div>
@@ -88,9 +88,16 @@
 @push('scripts')
     <script>
         $("document").ready(function() {
-            $daftarMenu = $("#daftarPesanan tbody").children("tr").each(function() {
+            $daftarMenu = $("#daftarPesanan tbody").children(".menu-item").each(function() {
                 change_jumlah($(this).children(".menu-id").first().val(), $(this).children(".pesan-jumlah").first().val());
             });
+        });
+
+        $("form").keypress(function(e) {
+            //Enter key
+            if (e.which == 13) {
+                return false;
+            }
         });
         
         function change_jumlah(menu_id, jumlah) {
@@ -98,8 +105,9 @@
             let menu_harga = $menu.children(".menu-harga").first().val();
 
             let harga_sub = menu_harga * jumlah;
-            $menu.children(".harga-sub").first().text("Rp" + harga_sub + ",-");
-            $menu.children(".jumlah-pesan").first().text(jumlah);
+            let old_harga_sub = parseInt($menu.find(".harga-sub").text());
+            $menu.find(".harga-sub").text(harga_sub);
+            $menu.find(".jumlah-pesan").text(jumlah);
             $menu.children(".pesan-jumlah").val(jumlah);
             if(jumlah > 0) {
                 $menu.removeClass("d-none");
@@ -108,10 +116,9 @@
                 $menu.addClass("d-none");
             }
 
-            let harga_total = 0;
-            $daftarMenu = $("#daftarPesanan tbody").children("tr").each(function() {
-                //
-            });
+            let harga_total = parseInt($("#subTotal").text());
+            harga_total += harga_sub - old_harga_sub;
+            $("#subTotal").text(harga_total);
         }
         
         $(".minus").click(function(e) {

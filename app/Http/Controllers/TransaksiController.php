@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Transaksi;
+use App\Bahan;
 use App\Menu;
 use Illuminate\Http\Request;
 
@@ -32,6 +33,29 @@ class TransaksiController extends Controller
         return view('transaksi.create')->with('daftarMenu', Menu::all());
     }
 
+    private function cekKetersediaan($daftar_pesan) {
+        $bahan_needed = [];
+        foreach ($daftar_pesan as $menu_id => $jumlah) {
+            $menu = Menu::find($menu_id);
+            foreach ($menu->daftarBahan as $bahan) {
+                if (isset($bahan_needed[$bahan->id])) {
+                    $bahan_needed[$bahan->id] += $bahan->pivot->jumlah * $jumlah;
+                }
+                else {
+                    $bahan_needed[$bahan->id] = $bahan->pivot->jumlah * $jumlah;
+                }
+            }
+        }
+
+        foreach ($bahan_needed as $bahan_id => $needed) {
+            $bahan = Bahan::find($bahan_id);
+            if ($bahan->stok < $needed) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -40,7 +64,14 @@ class TransaksiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $bahan_available = $this->cekKetersediaan($request->input('jumlah'));
+        if($bahan_available) {
+            $transaksi = new Transaksi;
+            return redirect('/transaksi/create')->with('success', 'Bahan tersedia');
+        }
+        else {
+            return back()->withInput()->with('error', 'Bahan tidak cukpu');
+        }
     }
 
     /**
