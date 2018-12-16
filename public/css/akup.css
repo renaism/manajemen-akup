@@ -54,3 +54,17 @@ hr {
 #mainContent {
     margin-top: 4rem;
 }
+
+.menu-img {
+    width: 120px;
+}
+
+.gambar-menu {
+    max-height: 125px;
+    max-width: 100%;
+}
+
+.gambar-menu-sm {
+    max-height: 75px;
+    max-width: 100%;
+}

@@ -2,11 +2,6 @@
 
 @section('header', 'Detail Transaksi')
 @section('main-content')
-    <style>
-        .menu-img {
-            width: 120px;
-        }
-    </style>
     <div class="card text-dark">
         <div class="card-header d-flex justify-content-between">
             <a href="/transaksi" class="btn btn-primary">Kembali</a>
@@ -21,7 +16,7 @@
             @foreach ($transaksi->daftarMenu as $menu)
                 <div class="menu d-flex">
                     <div class="menu-img mr-3">
-                        <img src="{{ asset('mie.jpg') }}" class="img-fluid">
+                        <img src="{{ asset('storage/menu/gambar/'.$menu->gambar) }}" onError="this.onerror=null;this.src='{{ asset('menu_default.jpg') }}';" class="gambar-menu img-thumbnail">
                     </div>
                     <div class="menu-detail flex-grow-1 mr-3">
                         <h3 class="menu-nama">{{ $menu->nama }}</h3>

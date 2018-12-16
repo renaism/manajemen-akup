@@ -2,12 +2,6 @@
 
 @section('header', 'Insert Menu')
 @section('main-content')
-    <style>
-        #gambar {
-            max-height: 125px;
-            max-width: 75%;
-        }
-    </style>
     <div class="card text-dark mt-4">
         <div class="card-body">
             @section('form-action')
@@ -34,7 +28,7 @@
                         <div class="form-group">
                             <label>Gambar</label>
                             <div id="gambarContainer" class="mb-3 @if(empty($menu) || $menu->gambar == 'default.jpg') d-none @endif">
-                                <img src="@yield('gambar')" id="gambar" class="img-thumbnail mb-3 d-block">
+                                <img src="@yield('gambar')" onError="this.onerror=null;this.src='{{ asset('menu_default.jpg') }}';" id="gambar" class="gambar-menu img-thumbnail mb-3 d-block">
                                 <button type="button" class="btn btn-sm btn-danger" id="deleteGambarBtn">Hapus Gambar</button>
                                 <input type="hidden" name="deleteGambar" id="deleteGambar" value="false">
                             </div>
