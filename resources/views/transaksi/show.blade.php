@@ -20,18 +20,18 @@
                     </div>
                     <div class="menu-detail flex-grow-1 mr-3">
                         <h3 class="menu-nama">{{ $menu->nama }}</h3>
-                        <h5>Rp{{ $menu->pivot->harga }},-</h5>
+                        <h5>Rp{{ number_format($menu->pivot->harga) }},-</h5>
                     </div>
                     <div class="menu-qty w-25 text-right">
                         <h3>x{{ $menu->pivot->jumlah }}</h3>
-                        <h5>Rp{{ $menu->pivot->harga * $menu->pivot->jumlah }},-</h5>
+                        <h5>Rp{{ number_format($menu->pivot->harga * $menu->pivot->jumlah) }},-</h5>
                     </div>
                 </div>
                 <hr>
             @endforeach
             <div id="hargaTotal" class="d-flex justify-content-between">
                 <h3>Subtotal</h3>
-                <h5 class="text-right">Rp{{ $transaksi->hargaTotal() }},-</h5>
+                <h5 class="text-right">Rp{{ number_format($transaksi->hargaTotal()) }},-</h5>
             </div>
         </div>
     </div>

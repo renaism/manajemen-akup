@@ -5,17 +5,16 @@
 @endsection
 @section('main-content')
     @if(count($daftarTransaksi) > 0)
-        <a href="/transaksi/create" class="btn btn-lg btn-light mt-2">
+        <a href="/transaksi/create" class="btn btn-lg btn-light mt-2 mb-4">
             <span class="oi oi-plus"></span>&nbsp;Input Transaksi
         </a>
-        <table class="table table-light text-dark table-hover my-4">
+        <table class="table table-light text-dark table-hover my-4" id="table">
             <thead>
                 <tr>
                     <th>No.</th>
                     <th>Tanggal</th>
                     <th>Jam</th>
-                    <th>Harga Total</th>
-                    <th></th>
+                    <th>Total</th>
                     <th></th>
                 </tr>
             </thead>
@@ -26,13 +25,11 @@
                         <td>{{ $i++ }}</td>
                         <td>{{ date('d F Y', strtotime($transaksi->tanggal)) }}</td>
                         <td>{{ date('H:i', strtotime($transaksi->tanggal)) }}</td>
-                        <td>Rp{{ $transaksi->hargaTotal() }},-</td>
+                        <td>Rp{{ number_format($transaksi->hargaTotal()) }},-</td>
                         <td>
-                            <a class="btn btn-primary float-right" href="/transaksi/{{ $transaksi->id }}">
+                            <a class="btn btn-primary" href="/transaksi/{{ $transaksi->id }}">
                                 <span class="oi oi-eye"></span>&nbsp;Lihat
                             </a>
-                        </td>
-                        <td>
                             <button type="button" data-toggle="modal" data-target="#delete{{ $transaksi->id }}" class="btn btn-danger">
                                 <span class="oi oi-trash"></span>&nbsp;Hapus
                             </button>
@@ -56,3 +53,21 @@
         </div>
     @endif
 @endsection
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            var t = $("#table").DataTable({
+                "columnDefs": [{
+                    "orderable": false, 
+                    "searchable": false,
+                    "targets": [0,4]}
+                ]
+            });
+            t.on('order.dt search.dt', function () {
+                t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                    cell.innerHTML = i+1;
+                });
+            }).draw();
+        });
+    </script>
+@endpush

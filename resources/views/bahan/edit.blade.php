@@ -9,6 +9,4 @@
 @endsection
 @section('nama'){{ $bahan->nama }}@endsection
 @section('stok'){{ $bahan->stok }}@endsection
-@section('form-submit')
-    <span class="oi oi-pencil"></span>&nbsp;&nbsp;Edit
-@endsection 
+@section('form-submit', 'Update')

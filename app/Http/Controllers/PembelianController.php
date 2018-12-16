@@ -15,7 +15,7 @@ class PembelianController extends Controller
      */
     public function index()
     {
-        $daftarPembelian = Pembelian::orderBy('tanggal', 'desc')->paginate(10);
+        $daftarPembelian = Pembelian::orderBy('tanggal', 'desc')->get();
         foreach ($daftarPembelian as $pembelian) {
             $pembelian->nama = 'Pembelian '.$pembelian->bahan->nama.' sejumlah '.$pembelian->jumlah.' '.$pembelian->bahan->satuan;
         }

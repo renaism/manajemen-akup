@@ -16,7 +16,7 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $daftarMenu = Menu::orderBy('nama', 'asc')->paginate(10);
+        $daftarMenu = Menu::orderBy('nama', 'asc')->get();
         return view('menu.index')->with('daftarMenu', $daftarMenu);
     }
 

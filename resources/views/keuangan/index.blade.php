@@ -35,32 +35,32 @@
                 @php($i = 1)
                 @foreach ($rekapKeuangan->daftarRekap as $rekap)
                     @if ($rekap->jenis == 'Penjualan')
-                        <tr class="table-warning">
+                        <tr class="table-success">
                             @php($c = $rekap->daftarMenu->count())
                             <td rowspan="{{ $c }}">{{ $i++ }}</td>
                             <td rowspan="{{ $c }}">{{ date('d F Y', strtotime($rekap->tanggal)) }}</td>
                             <td rowspan="{{ $c }}">{{ $rekap->jenis }}</td>
                             <td>{{ $rekap->daftarMenu[0]->nama }}</td>
                             <td>{{ $rekap->daftarMenu[0]->pivot->jumlah }}</td>
-                            <td rowspan="{{ $c }}" class="text-right">{{ $rekap->hargaTotal() }}</td>
+                            <td rowspan="{{ $c }}" class="text-right">Rp{{ number_format($rekap->hargaTotal()) }},-</td>
                         </tr>
                         @foreach ($rekap->daftarMenu as $menu)
                             @if($loop->first)
                                 @continue
                             @endif
-                            <tr class="table-warning">
+                            <tr class="table-success">
                                 <td>{{ $menu->nama }}</td>
                                 <td>{{ $menu->pivot->jumlah }}</td>
                             </tr>
                         @endforeach
                     @else
-                        <tr class="table-success">
+                        <tr class="table-warning">
                             <td>{{ $i++ }}</td>
                             <td>{{ date('d F Y', strtotime($rekap->tanggal)) }}</td>
                             <td>{{ $rekap->jenis }}</td>
                             <td>{{ $rekap->bahan->nama }}</td>
-                            <td>{{ $rekap->jumlah }}</td>
-                            <td class="text-right">{{ $rekap->harga }}</td>
+                            <td>{{ rtrim(rtrim($rekap->jumlah, 0), localeconv()['decimal_point']).' '.$rekap->bahan->satuan }}</td>
+                            <td class="text-right">Rp{{ number_format($rekap->harga) }},-</td>
                         </tr>
                     @endif
                 @endforeach
@@ -72,15 +72,15 @@
                     <table class="table table-borderless text-dark text-right m-0">
                         <tr>
                             <td><strong>Pemasukan</strong></td>
-                            <td>{{ $rekapKeuangan->pemasukan }}</td>
+                            <td>Rp{{ number_format($rekapKeuangan->pemasukan) }},-</td>
                         </tr>
                         <tr>
                             <td><strong>Pengeluaran</strong></td>
-                            <td>{{ $rekapKeuangan->pengeluaran }}</td>
+                            <td>Rp{{ number_format($rekapKeuangan->pengeluaran) }},-</td>
                         </tr>
                         <tr>
                             <td><strong>Keuntungan</strong></td>
-                            <td>{{ $rekapKeuangan->keuntungan }}</td>
+                            <td class="@if($rekapKeuangan->keuntungan >= 0) text-success @else text-danger @endif">Rp{{ number_format($rekapKeuangan->keuntungan) }},-</td>
                         </tr>
                     </table>
                 </div>

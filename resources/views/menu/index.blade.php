@@ -5,10 +5,10 @@
 @endsection
 @section('main-content')
     @if(count($daftarMenu) > 0)
-        <a href="/menu/create" class="btn btn-lg btn-light mt-2">
+        <a href="/menu/create" class="btn btn-lg btn-light mt-2 mb-4">
             <span class="oi oi-plus"></span>&nbsp;Insert Menu
         </a>
-        <table class="table table-light text-dark table-hover my-4">
+        <table class="table table-light text-dark table-hover my-4" id="table">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -24,7 +24,7 @@
                     <tr>
                         <td>{{ $i++ }}</td>
                         <td>{{ $menu->nama }}</td>
-                        <td>Rp {{ $menu->harga }}</td>
+                        <td>Rp{{ number_format($menu->harga) }}</td>
                         <td>
                             <a class="btn btn-primary float-right" href="/menu/{{ $menu->id }}/edit">
                                 <span class="oi oi-pencil"></span>&nbsp;Edit

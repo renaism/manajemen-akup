@@ -23,12 +23,13 @@
                     @if (count($daftarMenu) > 0)
                         @foreach ($daftarMenu as $menu)
                             <div class="menu d-flex">
+                                <input type="hidden" class="menu-id" value="{{ $menu->id }}">
                                 <div class="menu-img mr-3">
                                     <img src="{{ asset('storage/menu/gambar/'.$menu->gambar) }}" onError="this.onerror=null;this.src='{{ asset('menu_default.jpg') }}';" class="gambar-menu-sm img-thumbnail">
                                 </div>
                                 <div class="menu-detail flex-grow-1 mr-3">
                                     <h3 class="menu-nama">{{ $menu->nama }}</h3>
-                                    <span>Rp{{ $menu->harga }},-</span>
+                                    <span>Rp{{ number_format($menu->harga) }},-</span>
                                 </div>
                                 <div class="menu-qty w-25 d-flex align-items-end">
                                     <div class="input-group">
@@ -36,7 +37,7 @@
                                             <button type="button" class="btn minus">&minus;</button>
                                         </div>
                                         <input type="hidden" id="menuId" value="{{ $menu->id }}">
-                                        <input type="number" name="jumlah[{{ $menu->id }}]" id="inputJumlah{{ $menu->id }}" readonly step="1" min="0" class="form-control" value="{{ old('jumlah.'.$menu->id, '0') }}">
+                                        <input type="number" name="jumlah[{{ $menu->id }}]" id="inputJumlah{{ $menu->id }}" step="1" min="0" class="form-control input-jumlah" value="{{ old('jumlah.'.$menu->id, '0') }}">
                                         <div class="input-group-append">
                                             <button type="button" class="btn plus">&plus;</button>
                                         </div>
@@ -58,7 +59,6 @@
                                 <tr id="pesanMenu{{ $menu->id }}" class="d-none menu-item">
                                     <input type="hidden" class="menu-id" value="{{ $menu->id }}">
                                     <input type="hidden" class="menu-harga" value="{{ $menu->harga }}">
-                                    <input type="hidden" class="pesan-jumlah" value="0">
                                     <td>{{ $menu->nama }}</td>
                                     <td class="text-right">x<span class="jumlah-pesan">0</span></td>
                                     <td class="text-right">Rp<span class="harga-sub">0</span>,-</td>
@@ -87,28 +87,41 @@
 
 @push('scripts')
     <script>
-        $("document").ready(function() {
-            $daftarMenu = $("#daftarPesanan tbody").children(".menu-item").each(function() {
-                change_jumlah($(this).children(".menu-id").first().val(), $(this).children(".pesan-jumlah").first().val());
+        function getThousandSeparator() {
+            return (1000).toLocaleString().substr(1,1);
+        }
+
+        var moneyRegex = new RegExp(getThousandSeparator(), "g");
+        
+        $(document).ready(function() {
+            console.log("ready");
+            // $daftarMenu = $("#daftarPesanan tbody").children(".menu-item").each(function() {
+            //     console.log($(this).children(".pesan-jumlah").first().val());
+            //     change_jumlah($(this).children(".menu-id").first().val(), $(this).children(".pesan-jumlah").first().val());
+            // });
+
+            $(".menu").each(function() {
+                change_jumlah($(this).find(".menu-id").first().val(), $(this).find(".input-jumlah").first().val());
+            });
+
+            $("form").keypress(function(e) {
+                //Enter key
+                if (e.which == 13) {
+                    return false;
+                }
             });
         });
 
-        $("form").keypress(function(e) {
-            //Enter key
-            if (e.which == 13) {
-                return false;
-            }
-        });
-        
         function change_jumlah(menu_id, jumlah) {
             let $menu = $("#daftarPesanan #pesanMenu" + menu_id);
             let menu_harga = $menu.children(".menu-harga").first().val();
 
             let harga_sub = menu_harga * jumlah;
-            let old_harga_sub = parseInt($menu.find(".harga-sub").text());
-            $menu.find(".harga-sub").text(harga_sub);
+            let old_harga_sub = parseInt($menu.find(".harga-sub").text().replace(moneyRegex, ""));
+
+            $menu.find(".harga-sub").text(harga_sub.toLocaleString());
             $menu.find(".jumlah-pesan").text(jumlah);
-            $menu.children(".pesan-jumlah").val(jumlah);
+            //$menu.children(".pesan-jumlah").val(jumlah);
             if(jumlah > 0) {
                 $menu.removeClass("d-none");
             }
@@ -116,9 +129,9 @@
                 $menu.addClass("d-none");
             }
 
-            let harga_total = parseInt($("#subTotal").text());
+            let harga_total = parseInt($("#subTotal").text().replace(moneyRegex, ""));
             harga_total += harga_sub - old_harga_sub;
-            $("#subTotal").text(harga_total);
+            $("#subTotal").text(harga_total.toLocaleString());
         }
         
         $(".minus").click(function(e) {

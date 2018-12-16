@@ -28,13 +28,13 @@
                             <option value="g" @if($s=='g') selected @endif>Gram (g)</option>
                             <option value="kg" @if($s=='kg') selected @endif>Kilogram (kg)</option>
                             <option value="l" @if($s=='l') selected @endif>Liter (L)</option>
-                            <option value="sat" @if($s=='sat') selected @endif>Satuan (Buah)</option>
+                            <option value="buah" @if($s=='buah') selected @endif>Satuan (Buah)</option>
                         </select>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-lg btn-primary mt-4">
                     @section('form-submit')
-                        <span class="oi oi-plus"></span>&nbsp;&nbsp;Insert
+                        Insert
                     @show 
                 </button>
                 <a href="/bahan" class="btn btn-lg btn-danger float-right mt-4">Cancel</a>

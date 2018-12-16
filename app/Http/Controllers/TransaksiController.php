@@ -16,7 +16,7 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        $daftarTransaksi = Transaksi::orderBy('tanggal', 'desc')->paginate(10);
+        $daftarTransaksi = Transaksi::orderBy('tanggal', 'desc')->get();
         foreach ($daftarTransaksi as $transaksi) {
             $transaksi->nama = "Transaksi pada tanggal ".date('d F Y', strtotime($transaksi->tanggal))." jam ".date('H:i', strtotime($transaksi->tanggal));
         }
