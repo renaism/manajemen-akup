@@ -28,7 +28,7 @@
                         <td>{{ $pembelian->bahan->nama }}</td>
                         <td>{{ $pembelian->jumlah }} {{ $pembelian->bahan->satuan }}</td>
                         <td>Rp{{ $pembelian->harga }},-</td>
-                        <td>{{ $pembelian->tanggal }}</td>
+                        <td>{{ date('d F Y', strtotime($pembelian->tanggal)) }}</td>
                         <td>
                             <a class="btn btn-primary float-right" href="/pembelian/{{ $pembelian->id }}/edit">
                                 <span class="oi oi-pencil"></span>&nbsp;Edit

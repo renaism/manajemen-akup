@@ -2,11 +2,14 @@
 
 @section('header', 'Edit Menu')
 @section('form-action')
-    <form method="POST" action="{{ action('MenuController@update', $menu->id) }}" accept-charset="UTF-8">
+    <form method="POST" action="{{ action('MenuController@update', $menu->id) }}" enctype="multipart/form-data" accept-charset="UTF-8">
     @method('PUT')
 @endsection
 @section('nama'){{ $menu->nama }}@endsection
 @section('harga'){{ $menu->harga }}@endsection
+@if($menu->gambar != 'default.jpg')
+    @section('gambar'){{ asset('storage/menu/gambar/'.$menu->gambar) }}@endsection
+@endif
 @section('daftar-bahan')
     @foreach ($menu->daftarBahan as $bahan)
         <div class="form-inline">

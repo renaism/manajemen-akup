@@ -15,6 +15,6 @@ class Menu extends Model
 
     public function daftarTransaksi()
     {
-        return $this->belongsToMany('App\Transaksi', 'pesan')->using('App\Pesan')->withPivot('jumlah');
+        return $this->belongsToMany('App\Transaksi', 'pesan')->using('App\Pesan')->withPivot('harga', 'jumlah');
     }
 }

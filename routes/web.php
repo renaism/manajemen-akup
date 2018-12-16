@@ -19,3 +19,4 @@ Route::resource('bahan', 'BahanController');
 Route::resource('menu', 'MenuController');
 Route::resource('pembelian', 'PembelianController');
 Route::resource('transaksi', 'TransaksiController');
+Route::get('/keuangan', 'RekapKeuanganController@index');

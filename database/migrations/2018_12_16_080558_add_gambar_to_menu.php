@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePesanTable extends Migration
+class AddGambarToMenu extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreatePesanTable extends Migration
      */
     public function up()
     {
-        Schema::create('pesan', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('transaksi_id')->unsigned();
-            $table->integer('menu_id')->unsigned();
-            $table->decimal('harga', 8, 0);
-            $table->integer('jumlah');
+        Schema::table('menu', function($table) {
+            $table->string('gambar')->default("default.jpg");
         });
     }
 
@@ -29,6 +25,8 @@ class CreatePesanTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pesan');
+        Schema::table('menu', function($table) {
+            $table->dropColumn('gambar');
+        });
     }
 }

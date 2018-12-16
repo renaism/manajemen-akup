@@ -18,7 +18,7 @@ class TransaksiController extends Controller
     {
         $daftarTransaksi = Transaksi::orderBy('tanggal', 'desc')->paginate(10);
         foreach ($daftarTransaksi as $transaksi) {
-            //
+            $transaksi->nama = "Transaksi pada tanggal ".date('d F Y', strtotime($transaksi->tanggal))." jam ".date('H:i', strtotime($transaksi->tanggal));
         }
         return view('transaksi.index')->with('daftarTransaksi', $daftarTransaksi); 
     }
@@ -77,15 +77,18 @@ class TransaksiController extends Controller
         else {
             $transaksi = new Transaksi;
             $transaksi->tanggal = date('Y-m-d H:i:s');
-            $transaksi->harga_total = 0;
             $transaksi->save();
             foreach ($request->input('jumlah') as $menu_id => $jumlah) {
                 if ($jumlah > 0) {
+                    $menu = Menu::find($menu_id);
                     $transaksi->daftarMenu()->attach($menu_id, [
+                        'harga' => $menu->harga,
                         'jumlah' => $jumlah
                     ]);
-                    $menu = Menu::find($menu_id);
-                    $transaksi->harga_total += $menu->harga * $jumlah;
+                    foreach ($menu->daftarBahan as $bahan) {
+                        $bahan->stok -= $bahan->pivot->jumlah * $jumlah;
+                    }
+                    $menu->push();
                 }
             }
             $transaksi->save();
@@ -111,7 +114,7 @@ class TransaksiController extends Controller
      * @param  \App\Transaksi  $transaksi
      * @return \Illuminate\Http\Response
      */
-    public function edit(Transaksi $transaksi)
+    public function edit($id)
     {
         //
     }
@@ -123,7 +126,7 @@ class TransaksiController extends Controller
      * @param  \App\Transaksi  $transaksi
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Transaksi $transaksi)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -136,6 +139,14 @@ class TransaksiController extends Controller
      */
     public function destroy(Transaksi $transaksi)
     {
-        //
+        foreach ($transaksi->daftarMenu as $menu) {
+            foreach ($menu->daftarBahan as $bahan) {
+                $bahan->stok += $bahan->pivot->jumlah * $menu->pivot->jumlah;
+            }
+            $menu->push();
+        }
+        $transaksi->daftarMenu()->detach();
+        $transaksi->delete();
+        return redirect('/transaksi')->with('success', 'Transaksi berhasil dihapus');
     }
 }

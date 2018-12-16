@@ -2,25 +2,50 @@
 
 @section('header', 'Insert Menu')
 @section('main-content')
+    <style>
+        #gambar {
+            max-height: 125px;
+            max-width: 75%;
+        }
+    </style>
     <div class="card text-dark mt-4">
         <div class="card-body">
             @section('form-action')
-            <form method="POST" action="{{ action('MenuController@store') }}" accept-charset="UTF-8">
+            <form method="POST" action="{{ action('MenuController@store') }}" enctype="multipart/form-data" accept-charset="UTF-8">
             @show
                 @csrf
-                <div class="form-group">
-                    <label for="inputNama">Nama Menu</label>
-                    <input type="text" name="nama" class="form-control form-control-lg" id="inputNama" value="@section('nama'){{ old('nama') }}@show">
-                </div>
-                <div class="form-group">
-                    <label for="inputStok">Harga</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Rp</span>
+                <div class="row">
+                    <div class="col-8">
+                        <div class="form-group">
+                            <label for="inputNama">Nama Menu</label>
+                            <input type="text" name="nama" class="form-control form-control-lg" id="inputNama" value="@section('nama'){{ old('nama') }}@show">
                         </div>
-                        <input type="number" name="harga" class="form-control form-control-lg" step="any" id="inputHarga" value="@section('harga'){{ old('harga') }}@show">
+                        <div class="form-group">
+                            <label for="inputStok">Harga</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Rp</span>
+                                </div>
+                                <input type="number" name="harga" class="form-control form-control-lg" step="any" id="inputHarga" value="@section('harga'){{ old('harga') }}@show">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label>Gambar</label>
+                            <div id="gambarContainer" class="mb-3 @if(empty($menu) || $menu->gambar == 'default.jpg') d-none @endif">
+                                <img src="@yield('gambar')" id="gambar" class="img-thumbnail mb-3 d-block">
+                                <button type="button" class="btn btn-sm btn-danger" id="deleteGambarBtn">Hapus Gambar</button>
+                                <input type="hidden" name="deleteGambar" id="deleteGambar" value="false">
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" name="gambar" id="inputGambar" accept="image/*" class="custom-file-input" value={{ old('gambar') }}>
+                                <label for="inputGambar" class="custom-file-label text-truncate">Pilih file</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <hr>
                 <label>Daftar Bahan</label>
                 <div id="daftarBahan">
                     @yield('daftar-bahan')
@@ -57,6 +82,32 @@
 @endsection
 @push('scripts')
     <script>
+        $("#inputGambar").change(function() {
+            // Display file name
+            let fileName = $(this).val().split('\\').pop();;
+            $(this).next('.custom-file-label').addClass('selected').html(fileName);
+            
+            // Preview image
+            if(this.files && this.files[0]) {
+                let fr = new FileReader();
+                fr.onload = function(e) {
+                    $("#gambar").attr("src", e.target.result);
+                    $("#gambarContainer").removeClass("d-none");
+                };
+                fr.readAsDataURL(this.files[0]);
+                $("#deleteGambar").val("false");
+            }
+        });
+
+        $("#deleteGambarBtn").click(function(e) {
+            e.preventDefault();
+            $("#inputGambar").val("");
+            $("#gambar").attr("src", "");
+            $("#deleteGambar").val("true");
+            $("#gambarContainer").addClass("d-none");
+            $("#inputGambar").next('.custom-file-label').addClass('selected').html("Pilih file");
+        });
+        
         $("#addBahanBtn").click(function(e) {
             e.preventDefault();
             $(".bahan-template").clone().removeClass("bahan-template d-none").appendTo("#daftarBahan");

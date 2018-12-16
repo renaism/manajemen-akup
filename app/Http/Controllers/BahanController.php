@@ -109,7 +109,6 @@ class BahanController extends Controller
     {
         $bahan = Bahan::find($id);
         $bahan->daftarMenu()->detach();
-        $bahan->push();
         $bahan->delete();
         return redirect('/bahan')->with('success', 'Bahan berhasil dihapus');
     }

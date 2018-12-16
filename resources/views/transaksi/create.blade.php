@@ -4,13 +4,16 @@
 @section('main-content')
 <style>
     input[type="number"] {
-    -webkit-appearance: textfield;
+        -webkit-appearance: textfield;
         -moz-appearance: textfield;
-            appearance: textfield;
+        appearance: textfield;
     }
     input[type=number]::-webkit-inner-spin-button, 
     input[type=number]::-webkit-outer-spin-button { 
-    -webkit-appearance: none;
+        -webkit-appearance: none;
+    }
+    .menu-img {
+            width: 120px;
     }
 </style>
     <div class="container mt-4">
@@ -23,7 +26,7 @@
                     @if (count($daftarMenu) > 0)
                         @foreach ($daftarMenu as $menu)
                             <div class="menu d-flex">
-                                <div class="menu-img w-25 mr-3">
+                                <div class="menu-img mr-3">
                                     <img src="{{ asset('mie.jpg') }}" class="img-fluid">
                                 </div>
                                 <div class="menu-detail flex-grow-1 mr-3">

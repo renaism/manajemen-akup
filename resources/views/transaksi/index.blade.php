@@ -13,7 +13,7 @@
                 <tr>
                     <th>No.</th>
                     <th>Tanggal</th>
-                    <th>Waktu</th>
+                    <th>Jam</th>
                     <th>Harga Total</th>
                     <th></th>
                     <th></th>
@@ -26,7 +26,7 @@
                         <td>{{ $i++ }}</td>
                         <td>{{ date('d F Y', strtotime($transaksi->tanggal)) }}</td>
                         <td>{{ date('H:i', strtotime($transaksi->tanggal)) }}</td>
-                        <td>Rp{{ $transaksi->harga_total }},-</td>
+                        <td>Rp{{ $transaksi->hargaTotal() }},-</td>
                         <td>
                             <a class="btn btn-primary float-right" href="/transaksi/{{ $transaksi->id }}">
                                 <span class="oi oi-eye"></span>&nbsp;Lihat
@@ -36,7 +36,7 @@
                             <button type="button" data-toggle="modal" data-target="#delete{{ $transaksi->id }}" class="btn btn-danger">
                                 <span class="oi oi-trash"></span>&nbsp;Hapus
                             </button>
-                            <form method="POST" action="{{ action('TransaksiController@destroy', $transaksi->id) }}">
+                            <form method="POST" action="{{ action('TransaksiController@destroy', $transaksi) }}">
                                 @method('DELETE')
                                 @csrf
                                 @include('inc.delete', ['object' => $transaksi])

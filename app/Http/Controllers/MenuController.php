@@ -40,7 +40,8 @@ class MenuController extends Controller
     {
         $this->validate($request, [
             'nama' => 'required',
-            'harga' => 'required|integer|gte:0|lte:99999999'
+            'harga' => 'required|integer|gte:0|lte:99999999',
+            'gambar' => 'image|nullable|max:1999'
         ]);
 
         $menu = new Menu;
@@ -48,11 +49,28 @@ class MenuController extends Controller
         $menu->harga = $request->input('harga');
         $menu->save();
 
+        // Assigning list of bahan to the menu
         foreach ($request->input('daftarBahan') as $key => $bahan_id) {
             $menu->daftarBahan()->attach($bahan_id, [
                 'jumlah' => $request->input('jumlahBahan')[$key]
             ]);
         }
+
+        // Handlie image upload
+        if($request->hasFile('gambar')) {
+            // Get file name with the extension
+            $fNameExt = $request->file('gambar')->getClientOriginalName();
+            // Get just the file name
+            $fName = pathinfo($fNameExt, PATHINFO_FILENAME);
+            // Get just the extension
+            $fExt = $request->file('gambar')->getClientOriginalExtension();
+            // File name to store
+            $fNameStore = 'menuimg'.'_'.$menu->id.'_'.time().'.'.$fExt;
+            // Put the image to storage
+            $path = Storage::putFileAs('public/menu/gambar', $request->file('gambar'), $fNameStore);
+            
+            $menu->gambar = $fNameStore;
+        } 
 
         $menu->push();
 
@@ -93,17 +111,46 @@ class MenuController extends Controller
     {
         $this->validate($request, [
             'nama' => 'required',
-            'harga' => 'required|integer|gte:0|lte:99999999'
+            'harga' => 'required|integer|gte:0|lte:99999999',
+            'gambar' => 'image|nullable|max:1999'
         ]);
 
         $menu = Menu::find($id);
         $menu->nama = $request->input('nama');
         $menu->harga = $request->input('harga');
+
         $daftarBahan = [];
         foreach ($request->input('daftarBahan') as $key => $bahan_id) {
             $daftarBahan[$bahan_id] = ['jumlah' => $request->input('jumlahBahan')[$key]]; 
         }
         $menu->daftarBahan()->sync($daftarBahan);
+
+        // Update image if necessary
+        if($request->hasFile('gambar')) {
+            // Get file name with the extension
+            $fNameExt = $request->file('gambar')->getClientOriginalName();
+            // Get just the file name
+            $fName = pathinfo($fNameExt, PATHINFO_FILENAME);
+            // Get just the extension
+            $fExt = $request->file('gambar')->getClientOriginalExtension();
+            // File name to store
+            $fNameStore = 'menuimg'.'_'.$menu->id.'_'.time().'.'.$fExt;
+            // Put the image to storage
+            $path = Storage::putFileAs('public/menu/gambar', $request->file('gambar'), $fNameStore);
+            //Delete the old image
+            if($menu->gambar != 'default.jpg') {
+                Storage::delete('public/menu/gambar/'.$menu->gambar);
+            }
+
+            $menu->gambar = $fNameStore;
+        }
+        // Delete the image if necessary
+        else if($request->input('deleteGambar') == 'true') {
+            if($menu->gambar != 'default.jpg') {
+                Storage::delete('public/menu/gambar/'.$menu->gambar);
+            }
+            $menu->gambar = 'default.jpg';
+        }
 
         $menu->push();
 
@@ -120,6 +167,10 @@ class MenuController extends Controller
     {
         $menu = Menu::find($id);
         $menu->daftarBahan()->detach();
+        if($menu->gambar != 'default.jpg') {
+            // Delete the menu image
+            Storage::delete('public/menu/gambar/'.$menu->gambar);
+        }
         $menu->delete();
         return redirect('/menu')->with('success', 'Menu berhasil dihapus');
     }

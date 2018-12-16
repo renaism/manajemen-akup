@@ -18,7 +18,6 @@ class CreateTransaksiTable extends Migration
             $table->timestamps();
 
             $table->dateTime('tanggal');
-            $table->decimal('harga_total', 10, 0);
         });
     }
 
