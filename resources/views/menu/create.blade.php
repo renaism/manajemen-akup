@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.manajer')
 
 @section('header', 'Insert Menu')
 @section('main-content')

@@ -6,7 +6,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            @include('inc.sidebar')
+            @yield('sidebar')
             <div class="col-md-10 ml-auto">
                 <div class="container py-5" id="mainContent">
                     <h1>

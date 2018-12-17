@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.manajer')
 
 @section('header')
     <span class="oi oi-plus"></span>&nbsp;Insert Bahan

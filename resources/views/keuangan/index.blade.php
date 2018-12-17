@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.manajer')
 
 @section('header')
     <span class="oi oi-spreadsheet"></span>&nbsp;Rekap Keuangan

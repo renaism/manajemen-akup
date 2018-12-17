@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.kasir')
 
 @section('header')
     <span class="oi oi-cart"></span>&nbsp;Transaksi

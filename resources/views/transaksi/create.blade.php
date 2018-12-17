@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.kasir')
 
 @section('header', 'Input Transaksi')
 @section('main-content')
