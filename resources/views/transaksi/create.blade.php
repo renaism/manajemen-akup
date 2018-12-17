@@ -24,14 +24,14 @@
                         @foreach ($daftarMenu as $menu)
                             <div class="menu d-flex">
                                 <input type="hidden" class="menu-id" value="{{ $menu->id }}">
-                                <div class="menu-img mr-3">
+                                <div class="menu-img mr-2">
                                     <img src="{{ asset('storage/menu/gambar/'.$menu->gambar) }}" onError="this.onerror=null;this.src='{{ asset('menu_default.jpg') }}';" class="gambar-menu-sm img-thumbnail">
                                 </div>
-                                <div class="menu-detail flex-grow-1 mr-3">
-                                    <h3 class="menu-nama">{{ $menu->nama }}</h3>
-                                    <span>Rp{{ number_format($menu->harga) }},-</span>
+                                <div class="menu-detail flex-grow-1 mr-2">
+                                    <div class="menu-nama">{{ $menu->nama }}</div>
+                                    <div class="menu-harga">Rp{{ number_format($menu->harga) }},-</div>
                                 </div>
-                                <div class="menu-qty w-25 d-flex align-items-end">
+                                <div class="menu-qty d-flex justify-content-end align-items-end">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <button type="button" class="btn minus">&minus;</button>
@@ -145,6 +145,12 @@
             $(this).parent().siblings("input[type=number]")[0].stepUp();
             let menu_id = $(this).parent().siblings("input[type=hidden]").val();
             let jumlah = $(this).parent().siblings("input[type=number]").first().val();
+            change_jumlah(menu_id, jumlah);
+        });
+
+        $(".input-jumlah").change(function(e) {
+            let menu_id = $(this).siblings("input[type=hidden]").val();
+            let jumlah = $(this).val();
             change_jumlah(menu_id, jumlah);
         });
     </script>

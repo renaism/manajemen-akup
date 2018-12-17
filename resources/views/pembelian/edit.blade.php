@@ -2,7 +2,7 @@
 
 @section('header', 'Edit Pembelian')
 @section('form-action')
-    <form method="POST" action="{{ action('PembelianController@update', $pembelian->id) }}" accept-charset="UTF-8">
+    <form method="POST" action="{{ action('PembelianController@update', $pembelian) }}" accept-charset="UTF-8">
     @method('PUT')
 @endsection
 @section('bahan')
@@ -11,6 +11,7 @@
     </select>
 @endsection
 @section('jumlah'){{ $pembelian->jumlah }}@endsection
+@section('satuan'){{ $pembelian->bahan->satuan }}@endsection
 @section('harga'){{ $pembelian->harga }}@endsection
 @section('tanggal'){{ $pembelian->tanggal }}@endsection
 @section('form-submit', 'Update')

@@ -65,6 +65,10 @@ hr {
     background-color: var(--akup-yellow);
 }
 
+.navbar-brand img {
+    height: 3rem;
+}
+
 .sidebar {
     position: fixed;
     top: 0;
@@ -79,12 +83,26 @@ hr {
     position: relative;
     top: 0;
     height: calc(100vh - 4rem);
-    padding: 1rem 1rem 0;
+    padding-top: 1rem;
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
 
     background-color: var(--akup-dark);
-    font-size: 1.25rem;
+    font-size: 1rem;
+}
+
+@media (min-width: 1200px) {
+    .sidebar-sticky {
+        font-size: 1.2rem;
+    }
+}
+
+.sidebar-sticky .sidebar-header {
+    padding: 0 1rem;
+}
+
+.sidebar-sticky nav {
+    padding-left: .5rem;
 }
 
 #mainContent {
@@ -92,7 +110,32 @@ hr {
 }
 
 .menu-img {
-    width: 120px;
+    flex: 0 0 90px;
+}
+
+.menu-detail .menu-nama {
+    font-size: 1rem;
+}
+
+.menu-detail .menu-harga {
+    font-size: 0.75rem;
+}
+
+@media (min-width: 1200px) {
+    .menu-img {
+        flex: 0 0 120px;
+    }
+
+    .menu-detail .menu-nama {
+        font-size: 1.5rem;
+    }
+    .menu-detail .menu-harga {
+        font-size: 1rem;
+    }
+}
+
+.menu-qty {
+    flex: 0 0 120px;
 }
 
 .gambar-menu {

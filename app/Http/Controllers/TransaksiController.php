@@ -65,6 +65,19 @@ class TransaksiController extends Controller
      */
     public function store(Request $request)
     {
+        $orderEmpty = true;
+        
+        foreach($request->input('jumlah') as $jumlah) {
+            if ($jumlah > 0) {
+                $orderEmpty = false;
+                break;
+            }
+        }
+        
+        if($orderEmpty) {
+            return back()->withInput()->with('error', 'Tidak ada menu yang dipesan');
+        } 
+        
         $bahan_lack = $this->cekKetersediaan($request->input('jumlah'));
         if(count($bahan_lack) > 0) {
             $bahan_lack_string = "";

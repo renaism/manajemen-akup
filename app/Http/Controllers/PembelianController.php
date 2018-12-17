@@ -42,8 +42,8 @@ class PembelianController extends Controller
     {
         $this->validate($request, [
             'bahan' => 'required',
-            'jumlah' => 'required',
-            'harga' => 'required',
+            'jumlah' => 'required|numeric|gte:0|lte:999999.99',
+            'harga' => 'required|integer|gte:0|lte:99999999',
             'tanggal' => 'required|date'
         ]);
 
@@ -92,15 +92,13 @@ class PembelianController extends Controller
      * @param  \App\Pembelian  $pembelian
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Pembelian $pembelian)
     {
         $this->validate($request, [
-            'jumlah' => 'required',
-            'harga' => 'required',
+            'jumlah' => 'required|numeric|gte:0|lte:999999.99',
+            'harga' => 'required|integer|gte:0|lte:99999999',
             'tanggal' => 'required|date'
         ]);
-
-        $pembelian = Pembelian::find($id);
         
         $jumlah_diff = $request->input('jumlah') - $pembelian->jumlah;
         $pembelian->jumlah = $request->input('jumlah');
@@ -120,9 +118,8 @@ class PembelianController extends Controller
      * @param  \App\Pembelian  $pembelian
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Pembelian $pembelian)
     {
-        $pembelian = Pembelian::find($id);
         $pembelian->bahan->stok -= $pembelian->jumlah;
         $pembelian->bahan->save();
         $pembelian->delete();

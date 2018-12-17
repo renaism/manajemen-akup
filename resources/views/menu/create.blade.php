@@ -12,7 +12,7 @@
                     <div class="col-8">
                         <div class="form-group">
                             <label for="inputNama">Nama Menu</label>
-                            <input type="text" name="nama" class="form-control form-control-lg" id="inputNama" value="@section('nama'){{ old('nama') }}@show">
+                            <input type="text" name="nama" class="form-control form-control-lg" id="inputNama" value="@section('nama'){{ old('nama') }}@show" required>
                         </div>
                         <div class="form-group">
                             <label for="inputStok">Harga</label>
@@ -20,7 +20,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Rp</span>
                                 </div>
-                                <input type="number" name="harga" class="form-control form-control-lg" step="any" id="inputHarga" value="@section('harga'){{ old('harga') }}@show">
+                                <input type="number" name="harga" class="form-control form-control-lg" step="1" id="inputHarga" value="@section('harga'){{ old('harga') }}@show" min="0" max="99999999" required>
                             </div>
                         </div>
                     </div>
@@ -57,58 +57,71 @@
         </div>
     </div>
     <div class="form-inline bahan-template d-none">
-        <select name="daftarBahan[]" class="custom-select flex-grow-1 mb-2 mr-2">
+        <select name="daftarBahan[]" class="custom-select flex-grow-1 mb-2 mr-2" onchange="select_bahan(this)" required>
             <option value="" disabled selected>Pilih Bahan...</option>
             @foreach ($daftarBahan as $bahan)
                 <option value="{{ $bahan->id }}">{{ $bahan->nama }}</option>
             @endforeach
         </select>
-        <div class="input-group mb-2 mr-2 w-25">
-            <input type="number" name="jumlahBahan[]" class="form-control" step="any" placeholder="Jumlah">
+        <div class="input-group input-jumlah mb-2 mr-2 w-25">
+            <input type="number" name="jumlahBahan[]" class="form-control" step="any" placeholder="Jumlah" min="0" max="999999.99" required>
             <div class="input-group-append">
-                <span class="input-group-text">buah</span>
+                <span class="input-group-text input-jumlah-satuan"></span>
             </div>
         </div>
         <button type="button" class="btn btn-outline-danger mb-2 remove-bahan-btn">
             <span class="oi oi-trash"></span>
         </button>
     </div>
+    @foreach ($daftarBahan as $bahan)
+        <input type="hidden" id="satuan{{ $bahan->id }}" value="{{ $bahan->satuan }}">
+    @endforeach
 @endsection
 @push('scripts')
     <script>
-        $("#inputGambar").change(function() {
-            // Display file name
-            let fileName = $(this).val().split('\\').pop();;
-            $(this).next('.custom-file-label').addClass('selected').html(fileName);
+        $(document).ready( function() {
+            $("#inputGambar").change(function() {
+                // Display file name
+                let fileName = $(this).val().split('\\').pop();;
+                $(this).next('.custom-file-label').addClass('selected').html(fileName);
+                
+                // Preview image
+                if(this.files && this.files[0]) {
+                    let fr = new FileReader();
+                    fr.onload = function(e) {
+                        $("#gambar").attr("src", e.target.result);
+                        $("#gambarContainer").removeClass("d-none");
+                    };
+                    fr.readAsDataURL(this.files[0]);
+                    $("#deleteGambar").val("false");
+                }
+            });
+
+            $("#deleteGambarBtn").click(function(e) {
+                e.preventDefault();
+                $("#inputGambar").val("");
+                $("#gambar").attr("src", "");
+                $("#deleteGambar").val("true");
+                $("#gambarContainer").addClass("d-none");
+                $("#inputGambar").next('.custom-file-label').addClass('selected').html("Pilih file");
+            });
             
-            // Preview image
-            if(this.files && this.files[0]) {
-                let fr = new FileReader();
-                fr.onload = function(e) {
-                    $("#gambar").attr("src", e.target.result);
-                    $("#gambarContainer").removeClass("d-none");
-                };
-                fr.readAsDataURL(this.files[0]);
-                $("#deleteGambar").val("false");
-            }
+            $("#addBahanBtn").click(function(e) {
+                e.preventDefault();
+                $(".bahan-template").clone().removeClass("bahan-template d-none").appendTo("#daftarBahan");
+            });
+
+            $("#daftarBahan").on("click", ".remove-bahan-btn", function(e) {
+                e.preventDefault();
+                $(this).parent().remove();
+            })
         });
 
-        $("#deleteGambarBtn").click(function(e) {
-            e.preventDefault();
-            $("#inputGambar").val("");
-            $("#gambar").attr("src", "");
-            $("#deleteGambar").val("true");
-            $("#gambarContainer").addClass("d-none");
-            $("#inputGambar").next('.custom-file-label').addClass('selected').html("Pilih file");
-        });
-        
-        $("#addBahanBtn").click(function(e) {
-            e.preventDefault();
-            $(".bahan-template").clone().removeClass("bahan-template d-none").appendTo("#daftarBahan");
-        });
-        $("#daftarBahan").on("click", ".remove-bahan-btn", function(e) {
-            e.preventDefault();
-            $(this).parent().remove();
-        })
+        function select_bahan(select) {
+            console.log("X");
+            $(select).parent().find(".input-jumlah-satuan").text(
+                $("#satuan" + $(select).val()).val()
+            );
+        }
     </script>
 @endpush

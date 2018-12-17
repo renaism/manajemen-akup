@@ -35,7 +35,7 @@
                             <button type="button" data-toggle="modal" data-target="#delete{{ $pembelian->id }}" class="btn btn-danger">
                                 <span class="oi oi-trash"></span>&nbsp;Hapus
                             </button>
-                            <form method="POST" action="{{ action('PembelianController@destroy', $pembelian->id) }}">
+                            <form method="POST" action="{{ action('PembelianController@destroy', $pembelian) }}">
                                 @method('DELETE')
                                 @csrf
                                 @include('inc.delete', ['object' => $pembelian])

@@ -39,7 +39,7 @@ class MenuController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'nama' => 'required',
+            'nama' => 'required|unique:menu,nama',
             'harga' => 'required|integer|gte:0|lte:99999999',
             'gambar' => 'image|nullable|max:1999'
         ]);
@@ -50,10 +50,12 @@ class MenuController extends Controller
         $menu->save();
 
         // Assigning list of bahan to the menu
-        foreach ($request->input('daftarBahan') as $key => $bahan_id) {
-            $menu->daftarBahan()->attach($bahan_id, [
-                'jumlah' => $request->input('jumlahBahan')[$key]
-            ]);
+        if($request->has('daftarBahan')) {
+            foreach ($request->input('daftarBahan') as $key => $bahan_id) {
+                $menu->daftarBahan()->attach($bahan_id, [
+                    'jumlah' => $request->input('jumlahBahan')[$key]
+                ]);
+            }
         }
 
         // Handlie image upload
@@ -107,15 +109,14 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Menu $menu)
     {
         $this->validate($request, [
-            'nama' => 'required',
+            'nama' => 'required|unique:menu,nama,'.$menu->id,
             'harga' => 'required|integer|gte:0|lte:99999999',
             'gambar' => 'image|nullable|max:1999'
         ]);
 
-        $menu = Menu::find($id);
         $menu->nama = $request->input('nama');
         $menu->harga = $request->input('harga');
 

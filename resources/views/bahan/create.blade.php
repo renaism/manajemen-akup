@@ -13,17 +13,17 @@
                 @csrf
                 <div class="form-group">
                     <label for="inputNama">Nama Bahan</label>
-                    <input type="text" name="nama" class="form-control form-control-lg" id="inputNama" value="@section('nama'){{ old('nama') }}@show">
+                    <input type="text" name="nama" class="form-control form-control-lg" id="inputNama" value="@section('nama'){{ old('nama') }}@show" required>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="inputStok">Stok</label>
-                        <input type="number" name="stok" class="form-control form-control-lg" step="any" id="inputStok" value="@section('stok'){{ old('stok') }}@show">
+                        <input type="number" name="stok" class="form-control form-control-lg" step="any" id="inputStok" value="@section('stok'){{ old('stok') }}@show" min="0" max="999999.99" required>
                     </div>
                     <div class="form-group col-md-8">
                         <label for="inputSatuan">Satuan</label>
                         @php($s = (isset($bahan)) ? $bahan->satuan : old('satuan'))
-                        <select name="satuan" id="inputSatuan" class="custom-select custom-select-lg">
+                        <select name="satuan" id="inputSatuan" class="custom-select custom-select-lg" required>
                             <option value="" disabled selected>Pilih Satuan...</option>
                             <option value="g" @if($s=='g') selected @endif>Gram (g)</option>
                             <option value="kg" @if($s=='kg') selected @endif>Kilogram (kg)</option>

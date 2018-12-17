@@ -22,9 +22,9 @@
                 <div class="form-group">
                     <label for="inputNama">Jumlah</label>
                     <div class="input-group">
-                        <input type="number" name="jumlah" required class="form-control form-control-lg" step="any" id="inputJumlah" value="@section('jumlah'){{ old('jumlah') }}@show">
+                        <input type="number" name="jumlah" class="form-control form-control-lg" step="any" id="inputJumlah" value="@section('jumlah'){{ old('jumlah') }}@show" min="0" max="999999.99" required>
                         <div class="input-group-append">
-                            <span class="input-group-text"></span>
+                            <span class="input-group-text" id="satuanBahan">@yield('satuan')</span>
                         </div>
                     </div>
                 </div>
@@ -34,7 +34,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">Rp</span>
                         </div>
-                        <input type="number" name="harga" required class="form-control form-control-lg" step="any" id="inputHarga" value="@section('harga'){{ old('harga') }}@show">
+                        <input type="number" name="harga" required class="form-control form-control-lg" step="1" id="inputHarga" value="@section('harga'){{ old('harga') }}@show" min="0" max="99999999" required>
                     </div>
                 </div>
                 <div class="form-group">
@@ -50,21 +50,24 @@
             </form>   
         </div>
     </div>
-    <div class="form-inline bahan-template d-none">
-        <select name="daftarBahan[]" id="bahan" class="custom-select flex-grow-1 mb-2 mr-2">
-            <option value="" disabled selected>Pilih Bahan...</option>
-            @foreach ($daftarBahan as $bahan)
-                <option value="{{ $bahan->id }}">{{ $bahan->nama }}</option>
-            @endforeach
-        </select>
-        <div class="input-group mb-2 mr-2 w-25">
-            <input type="number" name="jumlahBahan[]" class="form-control" step="any" id="inputJumlahBahan" placeholder="Jumlah">
-            <div class="input-group-append">
-                <span class="input-group-text">buah</span>
-            </div>
-        </div>
-        <button type="button" class="btn btn-outline-danger mb-2 remove-bahan-btn">
-            <span class="oi oi-trash"></span>
-        </button>
-    </div>
+    @foreach ($daftarBahan as $bahan)
+        <input type="hidden" id="satuan{{ $bahan->id }}" value="{{ $bahan->satuan }}">
+    @endforeach
 @endsection
+@push('scripts')
+    <script>
+        function select_bahan(select) {
+            console.log("X");
+            $(select).parent().find(".input-jumlah-satuan").text(
+                $("#satuan" + $(select).val()).val()
+            );
+        }
+        $(document).ready(function() {
+            $("#inputBahan").change( function() {
+                $("#satuanBahan").text(
+                    $("#satuan" + $(this).val()).val()
+                );
+            });
+        });
+    </script>
+@endpush

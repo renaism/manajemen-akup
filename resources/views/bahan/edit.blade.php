@@ -4,7 +4,7 @@
     <span class="oi oi-pencil"></span>&nbsp;Edit Bahan
 @endsection
 @section('form-action')
-    <form method="POST" action="{{ action('BahanController@update', $bahan->id) }}" accept-charset="UTF-8">
+    <form method="POST" action="{{ action('BahanController@update', $bahan) }}" accept-charset="UTF-8">
     @method('PUT')
 @endsection
 @section('nama'){{ $bahan->nama }}@endsection

@@ -33,7 +33,7 @@
                             <button type="button" data-toggle="modal" data-target="#delete{{ $bahan->id }}" class="btn btn-danger">
                                 <span class="oi oi-trash"></span>&nbsp;Hapus
                             </button>
-                            <form method="POST" action="{{ action('BahanController@destroy', $bahan->id) }}">
+                            <form method="POST" action="{{ action('BahanController@destroy', $bahan) }}">
                                 @method('DELETE')
                                 @csrf
                                 @include('inc.delete', ['object' => $bahan])

@@ -38,9 +38,9 @@ class BahanController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'nama' => 'required',
+            'nama' => 'required|unique:bahan,nama',
             'satuan' => 'required',
-            'stok' => 'required|numeric|gte:0'
+            'stok' => 'required|numeric|gte:0|lte:999999.99'
         ]);
 
         $bahan = new Bahan;
@@ -82,15 +82,14 @@ class BahanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Bahan $bahan)
     {
         $this->validate($request, [
-            'nama' => 'required',
+            'nama' => 'required|unique:bahan,nama,'.$bahan->id,
             'satuan' => 'required',
             'stok' => 'required|numeric|gte:0|lte:999999.99'
         ]);
 
-        $bahan = Bahan::find($id);
         $bahan->nama = $request->input('nama');
         $bahan->satuan = $request->input('satuan');
         $bahan->stok = $request->input('stok');
@@ -105,9 +104,8 @@ class BahanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Bahan $bahan)
     {
-        $bahan = Bahan::find($id);
         $bahan->daftarMenu()->detach();
         $bahan->delete();
         return redirect('/bahan')->with('success', 'Bahan berhasil dihapus');
