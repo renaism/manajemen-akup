@@ -12,7 +12,7 @@
             @foreach ($daftarMenu as $menu)
                 <div class="col-4 col-lg-3 mb-4">
                     <div class="card menu h-100">
-                        <img src="{{ asset('storage/bahan/gambar/'.$menu->gambar) }}" alt="" class="card-img-top">
+                        <img src="{{ asset('storage/bahan/gambar/'.$menu->gambar) }}" onError="this.onerror=null;this.src='{{ asset('menu_default.jpg') }}';" class="card-img-top">
                         <div class="menu-action-button text-white w-100">
                             <div class="d-flex justify-content-end">
                                 <button type="button" class="btn btn-sm btn-outline-light mt-2 mr-2 shadow"><span class="oi oi-menu"></button>
