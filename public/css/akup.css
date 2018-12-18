@@ -109,6 +109,14 @@ hr {
     margin-top: 4rem;
 }
 
+.menu .menu-action-button {
+    position: absolute;
+}
+
+.menu .menu-action {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
 .menu-img {
     flex: 0 0 90px;
 }
