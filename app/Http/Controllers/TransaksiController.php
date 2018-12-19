@@ -16,8 +16,9 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        $daftarTransaksi = Transaksi::orderBy('tanggal', 'desc')->get();
+        $daftarTransaksi = Transaksi::all();
         foreach ($daftarTransaksi as $transaksi) {
+            $transaksi->harga_total = $transaksi->hargaTotal();
             $transaksi->nama = "Transaksi pada tanggal ".date('d F Y', strtotime($transaksi->tanggal))." jam ".date('H:i', strtotime($transaksi->tanggal));
         }
         return view('transaksi.index')->with('daftarTransaksi', $daftarTransaksi); 
@@ -118,6 +119,7 @@ class TransaksiController extends Controller
     public function show($id)
     {
         $transaksi = Transaksi::find($id);
+        $transaksi->harga_total = $transaksi->hargaTotal();
         return view('transaksi.show')->with('transaksi', $transaksi);
     }
 

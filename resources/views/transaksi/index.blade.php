@@ -23,9 +23,9 @@
                 @foreach($daftarTransaksi as $transaksi)
                     <tr>
                         <td>{{ $i++ }}</td>
-                        <td>{{ date('d F Y', strtotime($transaksi->tanggal)) }}</td>
+                        <td data-order="{{ $transaksi->tanggal }}">{{ date('d F Y', strtotime($transaksi->tanggal)) }}</td>
                         <td>{{ date('H:i', strtotime($transaksi->tanggal)) }}</td>
-                        <td>Rp{{ number_format($transaksi->hargaTotal()) }},-</td>
+                        <td data-order="{{ $transaksi->harga_total }}">Rp{{ number_format($transaksi->harga_total) }},-</td>
                         <td>
                             <a class="btn btn-primary" href="/transaksi/{{ $transaksi->id }}">
                                 <span class="oi oi-eye"></span>&nbsp;Lihat
@@ -61,7 +61,12 @@
                     "orderable": false, 
                     "searchable": false,
                     "targets": [0,4]}
-                ]
+                ],
+                "columnDefs": [{
+                    "orderable": false, 
+                    "targets": 2}
+                ],
+                "order": [[1, "desc"]]
             });
             t.on('order.dt search.dt', function () {
                 t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {

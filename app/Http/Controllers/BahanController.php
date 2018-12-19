@@ -15,7 +15,7 @@ class BahanController extends Controller
      */
     public function index()
     {
-        $daftarBahan = Bahan::orderBy('nama', 'asc')->get();
+        $daftarBahan = Bahan::all();
         return view('bahan.index')->with('daftarBahan', $daftarBahan);
     }
 

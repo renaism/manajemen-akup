@@ -25,9 +25,9 @@
                     <tr>
                         <td>{{ $i++ }}</td>
                         <td>{{ $pembelian->bahan->nama }}</td>
-                        <td>{{ rtrim(rtrim($pembelian->jumlah, 0), localeconv()['decimal_point']).' '.$pembelian->bahan->satuan }}</td>
-                        <td>Rp{{ number_format($pembelian->harga) }},-</td>
-                        <td>{{ date('d F Y', strtotime($pembelian->tanggal)) }}</td>
+                        <td data-order="{{ $pembelian->jumlah }}">{{ rtrim(rtrim($pembelian->jumlah, 0), localeconv()['decimal_point']).' '.$pembelian->bahan->satuan }}</td>
+                        <td data-order="{{ $pembelian->harga }}">Rp{{ number_format($pembelian->harga) }},-</td>
+                        <td data-order="{{ $pembelian->tanggal }}">{{ date('d F Y', strtotime($pembelian->tanggal)) }}</td>
                         <td>
                             <a class="btn btn-primary" href="/pembelian/{{ $pembelian->id }}/edit">
                                 <span class="oi oi-pencil"></span>&nbsp;Edit
@@ -63,7 +63,8 @@
                     "orderable": false, 
                     "searchable": false,
                     "targets": [0,5]}
-                ]
+                ],
+                "order": [[4, "desc"]]
             });
             t.on('order.dt search.dt', function () {
                 t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {

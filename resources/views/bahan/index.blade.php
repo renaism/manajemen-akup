@@ -24,8 +24,8 @@
                     <tr>
                         <td>{{ $i++ }}</td>
                         <td>{{ $bahan->nama }}</td>
-                        <td>{{ rtrim(rtrim($bahan->stok, 0), localeconv()['decimal_point']).' '.$bahan->satuan }}</td>
-                        <td>{{ date('d F Y', strtotime($bahan->updated_at)) }}</td>
+                        <td data-order="{{ $bahan->stok }}">{{ rtrim(rtrim($bahan->stok, 0), localeconv()['decimal_point']).' '.$bahan->satuan }}</td>
+                        <td data-order="{{ $bahan->updated_at }}">{{ date('d F Y', strtotime($bahan->updated_at)) }}</td>
                         <td>
                             <a class="btn btn-primary" href="/bahan/{{ $bahan->id }}/edit">
                                 <span class="oi oi-pencil"></span>&nbsp;Edit
@@ -61,7 +61,8 @@
                     "orderable": false, 
                     "searchable": false,
                     "targets": [0,4]}
-                ]
+                ],
+                "order": [[3, "desc"]]
             });
             t.on('order.dt search.dt', function () {
                 t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {

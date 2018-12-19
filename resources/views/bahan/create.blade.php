@@ -25,10 +25,9 @@
                         @php($s = (isset($bahan)) ? $bahan->satuan : old('satuan'))
                         <select name="satuan" id="inputSatuan" class="custom-select custom-select-lg" required>
                             <option value="" disabled selected>Pilih Satuan...</option>
-                            <option value="g" @if($s=='g') selected @endif>Gram (g)</option>
-                            <option value="kg" @if($s=='kg') selected @endif>Kilogram (kg)</option>
-                            <option value="l" @if($s=='l') selected @endif>Liter (L)</option>
-                            <option value="buah" @if($s=='buah') selected @endif>Satuan (Buah)</option>
+                            @foreach (('App\Bahan')::daftarSatuan() as $key => $value)
+                                <option value="{{ $key }}" @if($s==$key) selected @endif>{{ $key.' ('. $value.')' }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>

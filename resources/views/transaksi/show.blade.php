@@ -31,7 +31,7 @@
             @endforeach
             <div id="hargaTotal" class="d-flex justify-content-between">
                 <h3>Subtotal</h3>
-                <h5 class="text-right">Rp{{ number_format($transaksi->hargaTotal()) }},-</h5>
+                <h5 class="text-right">Rp{{ number_format($transaksi->harga_total) }},-</h5>
             </div>
         </div>
     </div>
