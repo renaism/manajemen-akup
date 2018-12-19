@@ -21,6 +21,12 @@ class RekapKeuanganController extends Controller
             'tgl_end' => 'required'
         ]);
 
+        if ($request->tgl_end < $request->tgl_start) {
+            $tmp = $request->tgl_end;
+            $request->tgl_end = $request->tgl_start;
+            $request->tgl_start = $tmp;
+        }
+
         $rekapKeuangan = new RekapKeuangan;
         $rekapKeuangan->tgl_start = $request->tgl_start;
         $rekapKeuangan->tgl_end = $request->tgl_end;

@@ -45,15 +45,15 @@ class PembelianController extends Controller
      */
     public function store(Request $request)
     {
+        $bahan = Bahan::find($request->input('bahan'));
         $this->validate($request, [
-            'bahan' => 'required',
-            'jumlah' => 'required|numeric|gte:0|lte:999999.99',
+            'bahan' => 'bail|required',
+            'jumlah' => 'required|numeric|gte:0|lte:'.round(999999.99-$bahan->stok, 2),
             'harga' => 'required|integer|gte:0|lte:99999999',
-            'tanggal' => 'required|date'
+            'tanggal' => 'required|date|before_or_equal:'.date('Y-m-d')
         ]);
 
         $pembelian = new Pembelian;
-        $bahan = Bahan::find($request->input('bahan'));
 
         $pembelian->jumlah = $request->input('jumlah');
         $pembelian->harga = $request->input('harga');
@@ -100,9 +100,9 @@ class PembelianController extends Controller
     public function update(Request $request, Pembelian $pembelian)
     {
         $this->validate($request, [
-            'jumlah' => 'required|numeric|gte:0|lte:999999.99',
+            'jumlah' => 'required|numeric|gte:0|lte:'.round(999999.99-$pembelian->bahan->stok+$pembelian->jumlah, 2),
             'harga' => 'required|integer|gte:0|lte:99999999',
-            'tanggal' => 'required|date'
+            'tanggal' => 'required|date|before_or_equal:'.date('Y-m-d')
         ]);
         
         if(!$pembelian->bahan->trashed()) {

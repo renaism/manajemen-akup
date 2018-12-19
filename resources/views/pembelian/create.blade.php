@@ -14,7 +14,7 @@
                         <select name="bahan" required id="inputBahan" class="custom-select custom-select-lg">
                             <option value="" disabled selected>Pilih Bahan...</option>
                             @foreach ($daftarBahan as $bahan)
-                                <option value="{{ $bahan->id }}">{{ $bahan->nama }}</option>
+                                <option value="{{ $bahan->id }}" @if(old('bahan') == $bahan->id) selected @endif>{{ $bahan->nama }}</option>
                             @endforeach
                         </select>
                     @show
@@ -39,7 +39,7 @@
                 </div>
                 <div class="form-group">
                     <label for="inputTanggal">Tanggal</label>
-                    <input type="date" name="tanggal" required class="form-control form-control-lg" value="@section('tanggal'){{ old('tanggal') }}@show">
+                    <input type="date" name="tanggal" required class="form-control form-control-lg" max="{{ date('Y-m-d') }}" value="@section('tanggal'){{ old('tanggal') }}@show">
                 </div>
                 <button type="submit" class="btn btn-lg btn-primary mt-4">
                     @section('form-submit')
