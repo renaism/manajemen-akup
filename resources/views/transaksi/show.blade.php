@@ -43,10 +43,9 @@
                         </div>
                         <div class="menu-detail flex-grow-1 mr-3">
                             <h3 class="menu-nama">
-                                @if($menu)
-                                    {{ $menu->nama }}
-                                @else
-                                    <span class="text-mute">Menu Dihapus</span>
+                                {{ $menu->nama }}
+                                @if($menu->trashed())
+                                    <em class="text-mute print-hide"> &lt;Dihapus&gt;</em>
                                 @endif
                             </h3>
                             <h5>Rp{{ number_format($menu->pivot->harga) }},-</h5>

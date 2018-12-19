@@ -16,6 +16,7 @@ class CreateBahanTable extends Migration
         Schema::create('bahan', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->string('nama')->unique();
             $table->string('satuan', 50);

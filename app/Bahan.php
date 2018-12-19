@@ -3,10 +3,14 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Bahan extends Model
 {
+    use SoftDeletes;
+    
     protected $table = 'bahan';
+    protected $dates = ['deleted_at'];
 
     public static function daftarSatuan()
     {

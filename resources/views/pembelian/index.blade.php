@@ -24,14 +24,8 @@
                 @foreach($daftarPembelian as $pembelian)
                     <tr>
                         <td>{{ $i++ }}</td>
-                        
-                        @if($pembelian->bahan)
-                            <td>{{ $pembelian->bahan->nama }}</td>
-                            <td data-order="{{ $pembelian->jumlah }}">{{ rtrim(rtrim($pembelian->jumlah, 0), localeconv()['decimal_point']).' '.$pembelian->bahan->satuan }}</td>
-                        @else
-                            <td><em class="text-muted">&lt;Bahan Dihapus&gt;</em></td>
-                            <td><em class="text-muted">{{ rtrim(rtrim($pembelian->jumlah, 0), localeconv()['decimal_point']).' ?' }}</em></td>
-                        @endif
+                        <td>{{ $pembelian->bahan->nama }} @if($pembelian->bahan->trashed()) <em class="text-muted">&lt;Dihapus&gt;</em> @endif</td>
+                        <td data-order="{{ $pembelian->jumlah }}">{{ rtrim(rtrim($pembelian->jumlah, 0), localeconv()['decimal_point']).' '.$pembelian->bahan->satuan }}</td>
                         <td data-order="{{ $pembelian->harga }}">Rp{{ number_format($pembelian->harga) }},-</td>
                         <td data-order="{{ $pembelian->tanggal }}">{{ date('d F Y', strtotime($pembelian->tanggal)) }}</td>
                         <td>

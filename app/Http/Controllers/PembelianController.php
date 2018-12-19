@@ -105,11 +105,11 @@ class PembelianController extends Controller
             'tanggal' => 'required|date'
         ]);
         
-        if($pembelian->bahan) {
+        if(!$pembelian->bahan->trashed()) {
             $jumlah_diff = $request->input('jumlah') - $pembelian->jumlah;
             $pembelian->bahan->stok += $jumlah_diff;
         }
-        
+
         $pembelian->jumlah = $request->input('jumlah');
         $pembelian->harga = $request->input('harga');
         $pembelian->tanggal = $request->input('tanggal');

@@ -10,7 +10,7 @@ class Transaksi extends Model
 
     public function daftarMenu()
     {
-        return $this->belongsToMany('App\Menu', 'pesan')->using('App\Pesan')->withPivot('harga', 'jumlah');
+        return $this->belongsToMany('App\Menu', 'pesan')->using('App\Pesan')->withPivot('harga', 'jumlah')->withTrashed();;
     }
 
     public function hargaTotal()

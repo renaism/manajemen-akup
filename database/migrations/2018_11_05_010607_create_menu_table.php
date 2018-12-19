@@ -16,6 +16,7 @@ class CreateMenuTable extends Migration
         Schema::create('menu', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->string('nama')->unique();
             $table->decimal('harga', 8, 0);
