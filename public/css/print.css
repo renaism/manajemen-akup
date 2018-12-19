@@ -1,0 +1,54 @@
+.print-only {
+    display: none;
+}
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    body {
+        background: none;
+    }
+
+    .navbar, .sidebar, img {
+        display: none;
+    }
+    
+    #print, #print * {
+        visibility: visible;
+        color: black;
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 14pt;
+        border-color: black !important;
+        border-width: 1px !important;
+    }
+
+    #print h1 {
+        font-size: 32pt;
+    }
+
+    #print h2 {
+        font-size: 24pt;
+    }
+
+    #print small {
+        font-size: 11pt;
+    }
+
+    #print {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 2cm 3cm 2cm 4cm;
+    }
+
+    .print-only {
+        display: block !important;
+    }
+
+    .print-hide {
+        display: none;
+    }
+}

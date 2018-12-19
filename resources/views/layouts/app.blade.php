@@ -23,6 +23,8 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/akup.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/datatables.min.css') }}"/>
+    <!-- Additional Styles -->
+    @stack('styles')
 </head>
 <body>
     <!-- Content -->
