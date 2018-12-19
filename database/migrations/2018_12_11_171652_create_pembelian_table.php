@@ -15,7 +15,7 @@ class CreatePembelianTable extends Migration
     {
         Schema::create('pembelian', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('bahan_id')->unsigned();
+            $table->integer('bahan_id')->unsigned()->nullable();
             $table->timestamps();
 
             $table->decimal('jumlah', 8, 2);

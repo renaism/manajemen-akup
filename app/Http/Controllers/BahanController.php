@@ -107,6 +107,10 @@ class BahanController extends Controller
     public function destroy(Bahan $bahan)
     {
         $bahan->daftarMenu()->detach();
+        foreach ($bahan->daftarPembelian as $pembelian) {
+            $pembelian->bahan()->dissociate();
+            $pembelian->save();
+        }
         $bahan->delete();
         return redirect('/bahan')->with('success', 'Bahan berhasil dihapus');
     }

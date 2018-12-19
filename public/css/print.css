@@ -32,10 +32,6 @@
         font-size: 24pt;
     }
 
-    #print small {
-        font-size: 11pt;
-    }
-
     #print {
         position: fixed;
         top: 0;

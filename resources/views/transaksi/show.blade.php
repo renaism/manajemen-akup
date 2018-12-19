@@ -42,7 +42,13 @@
                             <img src="{{ asset('storage/menu/gambar/'.$menu->gambar) }}" onError="this.onerror=null;this.src='{{ asset('menu_default.jpg') }}';" class="gambar-menu img-thumbnail">
                         </div>
                         <div class="menu-detail flex-grow-1 mr-3">
-                            <h3 class="menu-nama">{{ $menu->nama }}</h3>
+                            <h3 class="menu-nama">
+                                @if($menu)
+                                    {{ $menu->nama }}
+                                @else
+                                    <span class="text-mute">Menu Dihapus</span>
+                                @endif
+                            </h3>
                             <h5>Rp{{ number_format($menu->pivot->harga) }},-</h5>
                         </div>
                         <div class="menu-qty w-25 text-right">

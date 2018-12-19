@@ -26,11 +26,6 @@
                                 <button type="button" data-toggle="modal" data-target="#delete{{ $menu->id }}" class="btn btn-danger shadow">
                                     <span class="oi oi-trash"></span>&nbsp;Hapus
                                 </button>
-                                <form method="POST" action="{{ action('MenuController@destroy', $menu) }}">
-                                    @method('DELETE')
-                                    @csrf
-                                    @include('inc.delete', ['object' => $menu])
-                                </form>
                             </div>
                         </div>
                         <div class="card-body">
@@ -47,6 +42,11 @@
                         </div>
                     </div>
                 </div>
+                <form method="POST" action="{{ action('MenuController@destroy', $menu) }}">
+                    @method('DELETE')
+                    @csrf
+                    @include('inc.delete', ['object' => $menu])
+                </form>
             @endforeach
         </div>
         <table class="table table-light text-dark table-hover my-4 d-none" id="table">

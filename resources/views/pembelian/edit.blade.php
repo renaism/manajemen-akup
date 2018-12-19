@@ -7,11 +7,19 @@
 @endsection
 @section('bahan')
     <select id="inputBahan" class="custom-select custom-select-lg" disabled>
-        <option selected>{{ $pembelian->bahan->nama }}</option>
+        @if($pembelian->bahan)
+            <option selected>{{ $pembelian->bahan->nama }}</option>
+        @else
+            <option selected><em class="text-muted">&lt;Bahan Dihapus&gt;</em></option>
+        @endif
     </select>
 @endsection
 @section('jumlah'){{ $pembelian->jumlah }}@endsection
-@section('satuan'){{ $pembelian->bahan->satuan }}@endsection
+@if($pembelian->bahan)
+    @section('satuan'){{ $pembelian->bahan->satuan }}@endsection
+@else
+    @section('satuan')?@endsection
+@endif
 @section('harga'){{ $pembelian->harga }}@endsection
 @section('tanggal'){{ $pembelian->tanggal }}@endsection
 @section('form-submit', 'Update')

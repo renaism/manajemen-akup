@@ -17,7 +17,12 @@ class PembelianController extends Controller
     {
         $daftarPembelian = Pembelian::all();
         foreach ($daftarPembelian as $pembelian) {
-            $pembelian->nama = 'Pembelian '.$pembelian->bahan->nama.' sejumlah '.$pembelian->jumlah.' '.$pembelian->bahan->satuan;
+            if($pembelian->bahan) {
+                $pembelian->nama = 'Pembelian '.$pembelian->bahan->nama.' sejumlah '.$pembelian->jumlah.' '.$pembelian->bahan->satuan;
+            }
+            else {
+                $pembelian->nama = 'Pembelian [bahan dihapus]';
+            }
         }
         return view('pembelian.index')->with('daftarPembelian', $daftarPembelian);
     }
@@ -100,12 +105,14 @@ class PembelianController extends Controller
             'tanggal' => 'required|date'
         ]);
         
-        $jumlah_diff = $request->input('jumlah') - $pembelian->jumlah;
+        if($pembelian->bahan) {
+            $jumlah_diff = $request->input('jumlah') - $pembelian->jumlah;
+            $pembelian->bahan->stok += $jumlah_diff;
+        }
+        
         $pembelian->jumlah = $request->input('jumlah');
         $pembelian->harga = $request->input('harga');
         $pembelian->tanggal = $request->input('tanggal');
-
-        $pembelian->bahan->stok += $jumlah_diff;
 
         $pembelian->push();
 
